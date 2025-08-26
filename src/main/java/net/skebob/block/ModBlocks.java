@@ -17,7 +17,10 @@ import net.skebob.Skebob;
 import java.util.function.Function;
 
 public class ModBlocks {
-    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
+    private static Block register(String name,
+                                  Function<AbstractBlock.Settings, Block> blockFactory,
+                                  AbstractBlock.Settings settings,
+                                  boolean shouldRegisterItem) {
         // Create a registry key for the block
         RegistryKey<Block> blockKey = keyOfBlock(name);
         // Create the block instance
@@ -54,13 +57,6 @@ public class ModBlocks {
             true
             );
 
-    private static Block registerBlock(String name, Block block) {
-        registerBlockItem(name, block);
-        return Registry.register(Registries.BLOCK, Identifier.of(Skebob.MOD_ID, name), block);
-    }
-    private static void registerBlockItem(String name, Block block) {
-        Registry.register(Registries.ITEM, Identifier.of(Skebob.MOD_ID, name), new BlockItem(block, new Item.Settings()));
-    }
     public static void registerModBlocks() {
         Skebob.LOGGER.info("Registering Mod Blocks for " + Skebob.MOD_ID);
 

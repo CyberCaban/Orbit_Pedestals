@@ -7,7 +7,6 @@ import net.skebob.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static net.minecraft.item.Items.register;
 
 public class Skebob implements ModInitializer {
 	public static final String MOD_ID = "skebob";
