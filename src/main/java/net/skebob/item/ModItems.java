@@ -28,7 +28,7 @@ public class ModItems {
         return item;
     }
 
-    public static final Item SKEBOB = register("skebob", Item::new, new Item.Settings());
+    public static final Item SKEBOB = register("skebob", SkebobItem::new, new Item.Settings());
 
     public static void registerModItems() {
         Skebob.LOGGER.info("Registering Mod Items for " + Skebob.MOD_ID);

@@ -50,12 +50,24 @@ public class ModBlocks {
     public static final Block SKEBOB_BLOCK = register("skebob_block",
             Block::new,
             AbstractBlock.Settings.create()
-                    .strength(1f)
+                    .strength(20000f)
+                    .hardness(0.9999f)
                     .requiresTool()
                     .sounds(BlockSoundGroup.METAL)
             ,
             true
             );
+
+    public static final Block SKEBOB_SMART_BLOCK = register("skebob_smart_block",
+            Block::new,
+            AbstractBlock.Settings.create()
+                    .strength(1f)
+                    .hardness(1f)
+                    .requiresTool()
+                    .sounds(BlockSoundGroup.METAL)
+            ,
+            true
+    );
 
     public static void registerModBlocks() {
         Skebob.LOGGER.info("Registering Mod Blocks for " + Skebob.MOD_ID);
@@ -63,6 +75,7 @@ public class ModBlocks {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS)
                 .register(entries -> {
                     entries.add(ModBlocks.SKEBOB_BLOCK.asItem());
+                    entries.add(ModBlocks.SKEBOB_SMART_BLOCK.asItem());
                 });
     }
 }
