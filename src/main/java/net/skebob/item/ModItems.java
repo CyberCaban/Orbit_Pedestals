@@ -1,4 +1,4 @@
-package net.skebob;
+package net.skebob.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
@@ -8,6 +8,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import net.skebob.Skebob;
 
 import java.util.function.Function;
 
@@ -27,10 +28,13 @@ public class ModItems {
         return item;
     }
 
-    public static final Item SKEBOB = register("Skebob", Item::new, new Item.Settings());
+    public static final Item SKEBOB = register("skebob", Item::new, new Item.Settings());
 
-    public static void initialize() {
+    public static void registerModItems() {
+        Skebob.LOGGER.info("Registering Mod Items for " + Skebob.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS)
-                .register((itemGroup) -> itemGroup.add(ModItems.SKEBOB));
+                .register((itemGroup) -> {
+                    itemGroup.add(ModItems.SKEBOB);
+                });
     }
 }
