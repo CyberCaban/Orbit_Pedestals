@@ -5,10 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.ActionResult;
@@ -17,7 +14,6 @@ import net.skebob.block.ModBlocks;
 import net.skebob.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//net.fabricmc.fabric.api.event.Event
 
 
 public class Skebob implements ModInitializer {
@@ -42,7 +38,17 @@ public class Skebob implements ModInitializer {
 			BlockState state = world.getBlockState(pos);
 			ItemStack is = player.getStackInHand(hand);
 			if (is.isIn(ItemTags.HOES) && state.isIn(BlockTags.SAND)) {
-				world.setBlockState(pos, Blocks.GLASS.getDefaultState());
+				for (int i = -1; i <= 1; i++) {
+					for (int j = -1; j <= 1; j++) {
+						BlockPos newPos = pos.add(i, 0, j);
+						if (!world.getBlockState(newPos).isIn(BlockTags.SAND) ||
+								(i + j) % 2 == 0) continue;
+						world.setBlockState(
+								newPos,
+								Blocks.AIR.getDefaultState()
+						);
+					}
+				}
 				is.damage(1, player);
 			}
 			return ActionResult.PASS;
