@@ -11,6 +11,7 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.skebob.block.ModBlocks;
+import net.skebob.item.ModItemGroups;
 import net.skebob.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ public class Skebob implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		LOGGER.info("Hello Fabric world!");
+		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
 

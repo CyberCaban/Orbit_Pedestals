@@ -71,11 +71,5 @@ public class ModBlocks {
 
     public static void registerModBlocks() {
         Skebob.LOGGER.info("Registering Mod Blocks for " + Skebob.MOD_ID);
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS)
-                .register(entries -> {
-                    entries.add(ModBlocks.SKEBOB_BLOCK.asItem());
-                    entries.add(ModBlocks.SKEBOB_SMART_BLOCK.asItem());
-                });
     }
 }

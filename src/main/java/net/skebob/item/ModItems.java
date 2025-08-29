@@ -32,9 +32,5 @@ public class ModItems {
 
     public static void registerModItems() {
         Skebob.LOGGER.info("Registering Mod Items for " + Skebob.MOD_ID);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS)
-                .register((itemGroup) -> {
-                    itemGroup.add(ModItems.SKEBOB);
-                });
     }
 }
