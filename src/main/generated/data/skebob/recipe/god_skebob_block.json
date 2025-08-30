@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "l": "skebob:skebob_smart_block",
+    "p": "minecraft:nether_star"
+  },
+  "pattern": [
+    "lll",
+    "lpl",
+    "lll"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skebob:god_skebob_block"
+  }
+}

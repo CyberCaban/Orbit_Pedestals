@@ -57,6 +57,16 @@ public class ModBlocks {
             ,
             true
             );
+    public static final Block GOD_SKEBOB = register("god_skebob_block",
+            GodSkebobBlock::new,
+            AbstractBlock.Settings.create()
+                    .strength(1f)
+                    .hardness(1f)
+                    .requiresTool()
+                    .sounds(BlockSoundGroup.ANVIL)
+            ,
+                true
+    );
 
     public static final Block SKEBOB_SMART_BLOCK = register("skebob_smart_block",
             SmartSkebobBlock::new,

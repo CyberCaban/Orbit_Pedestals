@@ -1,5 +1,12 @@
 {
   "item.skebob.skebob": "Skebob",
   "item.skebob.skebob_block": "Block of Skebob",
-  "item.skebob.skebob.tooltip": "Legendary Skebob"
+  "item.skebob.skebob_smart_block": "Smart Skebob",
+  "item.skebob.skebob.tooltip": "Legendary Skebob",
+  "item.skebob.god_skebob_pickaxe" : "God Skebob Pickaxe",
+  "item.skebob.god_skebob_block" : "God Skebob",
+  "item.skebob.god_skebob_axe" : "God Skebob Axe",
+  "item.skebob.god_skebob_sword" : "God Skebob Sword",
+  "item.skebob.god_skebob_hoe" : "God Skebob Hoe",
+  "item.skebob.god_skebob_shovel" : "God Skebob Shovel"
 }

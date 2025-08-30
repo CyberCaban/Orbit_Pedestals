@@ -20,6 +20,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
     @Override
     public void generate() {
         addDrop(ModBlocks.SKEBOB_BLOCK);
+        addDrop(ModBlocks.GOD_SKEBOB);
         addDrop(ModBlocks.SKEBOB_SMART_BLOCK,
                 LootTable.builder()
                         .pool(

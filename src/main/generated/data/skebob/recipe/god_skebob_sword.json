@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "l": "skebob:god_skebob_block",
+    "p": "minecraft:stick"
+  },
+  "pattern": [
+    " l ",
+    " l ",
+    " p "
+  ],
+  "result": {
+    "count": 1,
+    "id": "skebob:god_skebob_sword"
+  }
+}
