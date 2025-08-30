@@ -18,6 +18,8 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         valueLookupBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(ModBlocks.SKEBOB_BLOCK)
                 .add(ModBlocks.SKEBOB_SMART_BLOCK)
+                .add(ModBlocks.GOD_SKEBOB)
                 ;
     }
 }
+

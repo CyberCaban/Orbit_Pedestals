@@ -18,10 +18,17 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SKEBOB_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SKEBOB_SMART_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.GOD_SKEBOB);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(ModItems.SKEBOB, Models.GENERATED);
+        itemModelGenerator.register(ModItems.GOD_SKEBOB_PICKAXE,Models.GENERATED);
+        itemModelGenerator.register(ModItems.GOD_SKEBOB_SHOVEL,Models.GENERATED);
+        itemModelGenerator.register(ModItems.GOD_SKEBOB_SWORD,Models.GENERATED);
+        itemModelGenerator.register(ModItems.GOD_SKEBOB_AXE,Models.GENERATED);
+        itemModelGenerator.register(ModItems.GOD_SKEBOB_HOE,Models.GENERATED);
+
     }
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_god_skebob_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "skebob:skebob"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "skebob:god_skebob_sword"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_god_skebob_pickaxe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "skebob:god_skebob_sword"
+    ]
+  }
+}

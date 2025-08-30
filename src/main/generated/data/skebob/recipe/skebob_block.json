@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "l": "skebob:skebob"
+  },
+  "pattern": [
+    "lll",
+    "lll",
+    "lll"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skebob:skebob_block"
+  }
+}

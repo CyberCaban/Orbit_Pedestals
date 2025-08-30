@@ -19,10 +19,16 @@ public class ModItemGroups {
                     .entries((displayContext, entries) -> {
                         // ITEMS
                         entries.add(ModItems.SKEBOB);
+                        entries.add(ModItems.GOD_SKEBOB_PICKAXE);
+                        entries.add(ModItems.GOD_SKEBOB_SHOVEL);
+                        entries.add(ModItems.GOD_SKEBOB_SWORD);
+                        entries.add(ModItems.GOD_SKEBOB_AXE);
+                        entries.add(ModItems.GOD_SKEBOB_HOE);
 
                         // BLOCKS
                         entries.add(ModBlocks.SKEBOB_BLOCK);
                         entries.add(ModBlocks.SKEBOB_SMART_BLOCK);
+                        entries.add(ModBlocks.GOD_SKEBOB);
                     })
                     .build());
     public static void registerItemGroups() {
