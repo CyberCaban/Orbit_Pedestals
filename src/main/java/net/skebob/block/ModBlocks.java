@@ -59,11 +59,12 @@ public class ModBlocks {
             );
 
     public static final Block SKEBOB_SMART_BLOCK = register("skebob_smart_block",
-            Block::new,
+            SmartSkebobBlock::new,
             AbstractBlock.Settings.create()
                     .strength(1f)
                     .hardness(1f)
                     .requiresTool()
+                    .luminance(value -> value.get(SmartSkebobBlock.CLICKED) ? 15 : 0)
                     .sounds(BlockSoundGroup.METAL)
             ,
             true
