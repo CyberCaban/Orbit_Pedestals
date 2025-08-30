@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"net.skebob.SkebobClient"
+		],
+		"fabric-datagen": [
+			"net.skebob.datagen.SkebobDataGen"
 		]
 	},
 	"mixins": [
