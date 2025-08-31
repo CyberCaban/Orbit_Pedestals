@@ -69,8 +69,10 @@ public class Skebob implements ModInitializer {
 				if (AoWAbilities.ABILITIES.containsKey(ability)) {
 					AoWAbilities.ABILITIES.get(ability).use(playerEntity, world, hand, playerEntity.getStackInHand(hand));
 				}
+				return ActionResult.SUCCESS;
+			} else {
+				return ActionResult.PASS;
 			}
-			return ActionResult.PASS;
 		});
 	}
 }

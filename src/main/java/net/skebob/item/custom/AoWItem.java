@@ -34,8 +34,10 @@ public class AoWItem extends Item {
                 stackInSlot.set((ComponentType<String>) ModComponents.AOW_INFUSABLE, ability.getName());
                 stack.decrement(1);
             }
+            // returns true cuz item swap isn't needed
+            return true;
         }
-        return super.onStackClicked(stack, slot, clickType, player);
+        return false;
     }
 
     public AshAbility getAbility() {
