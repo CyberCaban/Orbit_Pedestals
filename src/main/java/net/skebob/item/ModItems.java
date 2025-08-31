@@ -9,8 +9,12 @@ import net.minecraft.util.Identifier;
 import net.skebob.Skebob;
 import net.skebob.item.custom.AoWItem;
 import net.skebob.item.custom.SkebobItem;
+import net.skebob.item.custom.ability.AoWAbilities;
+import net.skebob.item.custom.ability.AshAbility;
 import net.skebob.item.custom.ability.WindAshAbility;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 public class ModItems {
@@ -36,6 +40,9 @@ public class ModItems {
     public static final Item GOD_SKEBOB_SHOVEL = register("god_skebob_shovel", settings -> new ShovelItem(ModToolMaterials.GOD_SKEBOB_MATERIAL, 3f, 3f,settings), new Item.Settings());
 
     public static final Item WIND_ASH = register("wind_aow", settings -> new AoWItem(settings, new WindAshAbility()), new Item.Settings());
+    public static final Map<WindAshAbility, Item> AOW_ABILITIES = Map.of(
+            new WindAshAbility(), WIND_ASH
+    );
 
     public static void registerModItems() {
         Skebob.LOGGER.info("Registering Mod Items for " + Skebob.MOD_ID);

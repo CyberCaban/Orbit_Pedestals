@@ -34,11 +34,11 @@ public class Skebob implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		LOGGER.info("Hello Fabric world!");
-		ModItemGroups.registerItemGroups();
+		AoWAbilities.registerAbilities();
 		ModItems.registerModItems();
+		ModItemGroups.registerItemGroups();
 		ModBlocks.registerModBlocks();
 		ModComponents.registerModComponents();
-		AoWAbilities.registerAbilities();
 
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
 			BlockPos pos = hitResult.getBlockPos();
@@ -66,8 +66,8 @@ public class Skebob implements ModInitializer {
 			if (is.isIn(ItemTags.SWORDS) &&
 			is.contains(ModComponents.AOW_INFUSABLE)) {
 				String ability = (String) is.get(ModComponents.AOW_INFUSABLE);
-				if (AoWAbilities.abilities.containsKey(ability)) {
-					AoWAbilities.abilities.get(ability).use(playerEntity, world, hand, playerEntity.getStackInHand(hand));
+				if (AoWAbilities.ABILITIES.containsKey(ability)) {
+					AoWAbilities.ABILITIES.get(ability).use(playerEntity, world, hand, playerEntity.getStackInHand(hand));
 				}
 			}
 			return ActionResult.PASS;

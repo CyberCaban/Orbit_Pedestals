@@ -3,7 +3,8 @@
 	"package": "net.skebob.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"ExampleMixin",
+		"HandledScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

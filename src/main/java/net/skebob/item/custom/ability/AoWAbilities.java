@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AoWAbilities {
-    public static final Map<String, AshAbility> abilities = new HashMap<String, AshAbility>();
+    public static final Map<String, AshAbility> ABILITIES = new HashMap<>();
 
     public static void registerAbility(AshAbility ability) {
-        abilities.put(ability.getName(), ability);
+        ABILITIES.put(ability.getName(), ability);
     }
     public static void registerAbilities() {
         registerAbility(new WindAshAbility());

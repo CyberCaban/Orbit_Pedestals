@@ -32,8 +32,8 @@ public class AoWItem extends Item {
         if (stackInSlot.isIn(ItemTags.SWORDS)) {
             if (!stackInSlot.contains(ModComponents.AOW_INFUSABLE)) {
                 stackInSlot.set((ComponentType<String>) ModComponents.AOW_INFUSABLE, ability.getName());
+                stack.decrement(1);
             }
-
         }
         return super.onStackClicked(stack, slot, clickType, player);
     }
