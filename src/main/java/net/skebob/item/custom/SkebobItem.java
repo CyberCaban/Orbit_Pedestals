@@ -1,4 +1,4 @@
-package net.skebob.item;
+package net.skebob.item.custom;
 
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;

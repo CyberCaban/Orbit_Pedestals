@@ -25,6 +25,9 @@ public class ModItemGroups {
                         entries.add(ModItems.GOD_SKEBOB_AXE);
                         entries.add(ModItems.GOD_SKEBOB_HOE);
 
+                        // AOW ITEMS
+                        entries.add(ModItems.WIND_ASH);
+
                         // BLOCKS
                         entries.add(ModBlocks.SKEBOB_BLOCK);
                         entries.add(ModBlocks.SKEBOB_SMART_BLOCK);

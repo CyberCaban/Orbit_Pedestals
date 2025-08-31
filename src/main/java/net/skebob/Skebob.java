@@ -3,6 +3,7 @@ package net.skebob;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
@@ -11,8 +12,10 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.skebob.block.ModBlocks;
+import net.skebob.item.ModComponents;
 import net.skebob.item.ModItemGroups;
 import net.skebob.item.ModItems;
+import net.skebob.item.custom.ability.AoWAbilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +37,8 @@ public class Skebob implements ModInitializer {
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
+		ModComponents.registerModComponents();
+		AoWAbilities.registerAbilities();
 
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
 			BlockPos pos = hitResult.getBlockPos();
@@ -52,6 +57,18 @@ public class Skebob implements ModInitializer {
 					}
 				}
 				is.damage(1, player);
+			}
+			return ActionResult.PASS;
+		});
+
+		UseItemCallback.EVENT.register((playerEntity, world, hand) -> {
+			ItemStack is = playerEntity.getStackInHand(hand);
+			if (is.isIn(ItemTags.SWORDS) &&
+			is.contains(ModComponents.AOW_INFUSABLE)) {
+				String ability = (String) is.get(ModComponents.AOW_INFUSABLE);
+				if (AoWAbilities.abilities.containsKey(ability)) {
+					AoWAbilities.abilities.get(ability).use(playerEntity, world, hand, playerEntity.getStackInHand(hand));
+				}
 			}
 			return ActionResult.PASS;
 		});
