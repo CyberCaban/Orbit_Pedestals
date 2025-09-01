@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "skebob:item/aow",
+    "layer1": "minecraft:item/wind_charge"
+  }
+}

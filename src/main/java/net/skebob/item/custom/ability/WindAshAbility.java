@@ -11,6 +11,9 @@ import net.minecraft.world.World;
 import net.skebob.item.ModItems;
 
 public class WindAshAbility extends AshAbility {
+    public WindAshAbility() {
+      super(10);
+    }
     @Override
     public void use(PlayerEntity player, World world, Hand hand, ItemStack stack) {
         if (!world.isClient &&

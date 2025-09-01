@@ -6,6 +6,16 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
 public abstract class AshAbility {
+    private int MAX_ACTIVATION_TIME;
+    public AshAbility() {
+      this.MAX_ACTIVATION_TIME = 30;
+    }
+    public AshAbility(int maxActivationTime) {
+      this.MAX_ACTIVATION_TIME = maxActivationTime;
+    }
+    public int getActivationTime() {
+      return MAX_ACTIVATION_TIME;
+    }
     public void use(PlayerEntity player, World world, Hand hand, ItemStack stack) { }
     public String getName() { return null; }
 
