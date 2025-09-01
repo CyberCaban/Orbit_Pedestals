@@ -11,5 +11,7 @@ public class AoWAbilities {
     }
     public static void registerAbilities() {
         registerAbility(new WindAshAbility());
+        registerAbility(new ArrowAshAbility());
+        registerAbility(new ArrowAshAbilityEX());
     }
 }

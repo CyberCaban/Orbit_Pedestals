@@ -11,6 +11,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.skebob.Skebob;
 
@@ -75,7 +76,7 @@ public class ModBlocks {
                     .hardness(1f)
                     .requiresTool()
                     .luminance(value -> value.get(SmartSkebobBlock.CLICKED) ? 15 : 0)
-                    .sounds(BlockSoundGroup.METAL)
+                    .sounds(BlockSoundGroup.HONEY)
             ,
             true
     );
