@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "l": "skebob:magic_paper",
+    "p": "minecraft:diamond"
+  },
+  "pattern": [
+    "lll",
+    "lpl",
+    "lll"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skebob:empty_ash"
+  }
+}
