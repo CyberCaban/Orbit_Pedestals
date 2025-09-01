@@ -9,9 +9,7 @@ import net.minecraft.util.Identifier;
 import net.skebob.Skebob;
 import net.skebob.item.custom.AoWItem;
 import net.skebob.item.custom.SkebobItem;
-import net.skebob.item.custom.ability.AoWAbilities;
-import net.skebob.item.custom.ability.AshAbility;
-import net.skebob.item.custom.ability.WindAshAbility;
+import net.skebob.item.custom.ability.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,9 +37,16 @@ public class ModItems {
     public static final Item GOD_SKEBOB_HOE = register("god_skebob_hoe", settings -> new HoeItem(ModToolMaterials.GOD_SKEBOB_MATERIAL, 3f, 3f,settings), new Item.Settings());
     public static final Item GOD_SKEBOB_SHOVEL = register("god_skebob_shovel", settings -> new ShovelItem(ModToolMaterials.GOD_SKEBOB_MATERIAL, 3f, 3f,settings), new Item.Settings());
 
+
+
+    public static final Item MAGIC_PAPER=register("magic_paper",Item::new,new Item.Settings());
+    public static final Item EMPTY_ASH = register("empty_ash",Item::new,new Item.Settings());
     public static final Item WIND_ASH = register("wind_aow", settings -> new AoWItem(settings, new WindAshAbility()), new Item.Settings());
-    public static final Map<WindAshAbility, Item> AOW_ABILITIES = Map.of(
-            new WindAshAbility(), WIND_ASH
+    public static final Item ARROW_ASH = register("arrow_aow", settings -> new AoWItem(settings, new ArrowAshAbility()), new Item.Settings());
+   public static final Item ARROW_EX_ASH = register("arrow_ex_aow",settings -> new AoWItem(settings,new ArrowAshAbilityEX()),new Item.Settings());
+    public static final Map<AshAbility, Item> AOW_ABILITIES = Map.of(
+            new WindAshAbility(), WIND_ASH,
+            new ArrowAshAbility(), ARROW_ASH
     );
 
     public static void registerModItems() {

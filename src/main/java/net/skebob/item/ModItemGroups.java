@@ -26,7 +26,11 @@ public class ModItemGroups {
                         entries.add(ModItems.GOD_SKEBOB_HOE);
 
                         // AOW ITEMS
+                        entries.add(ModItems.MAGIC_PAPER);
+                        entries.add(ModItems.EMPTY_ASH);
                         entries.add(ModItems.WIND_ASH);
+                        entries.add(ModItems.ARROW_ASH);
+                        entries.add(ModItems.ARROW_EX_ASH);
 
                         // BLOCKS
                         entries.add(ModBlocks.SKEBOB_BLOCK);

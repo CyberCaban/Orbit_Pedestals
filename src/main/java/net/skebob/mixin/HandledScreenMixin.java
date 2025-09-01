@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ScreenHandler.class)
+@Mixin (ScreenHandler.class)
 public class HandledScreenMixin {
     @Inject(method = "onSlotClick", at = @At("HEAD"), cancellable = true)
     private void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo ci) {
