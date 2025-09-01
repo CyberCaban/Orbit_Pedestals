@@ -5,11 +5,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class GlintstoneProjectileEntity extends ExplosiveProjectileEntity implements FlyingItemEntity {
@@ -30,6 +34,18 @@ public class GlintstoneProjectileEntity extends ExplosiveProjectileEntity implem
             entity.damage(serverWorld, this.getDamageSources().thrown(this, this.getOwner()), 4);
             this.discard();
         }
+    }
+
+    @Override
+    protected void onBlockHit(BlockHitResult blockHitResult) {
+        super.onBlockHit(blockHitResult);
+        BlockPos blockPos = blockHitResult.getBlockPos();
+        this.getWorld().playSound(null, blockPos, SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
+    }
+
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+
     }
 
     @Override
