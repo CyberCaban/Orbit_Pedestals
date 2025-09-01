@@ -5,13 +5,14 @@ import java.util.Map;
 
 public class AoWAbilities {
     public static final Map<String, AshAbility> ABILITIES = new HashMap<>();
+    public static final AshAbility WIND_ASH_ABILITY = registerAbility(new WindAshAbility());
+    public static final AshAbility ARROW_ASH_ABILITY = registerAbility(new ArrowAshAbility());
+    public static final AshAbility ARROW_EX_ASH_ABILITY = registerAbility(new ArrowAshAbilityEX());
 
-    public static void registerAbility(AshAbility ability) {
+    public static AshAbility registerAbility(AshAbility ability) {
         ABILITIES.put(ability.getName(), ability);
+        return ability;
     }
     public static void registerAbilities() {
-        registerAbility(new WindAshAbility());
-        registerAbility(new ArrowAshAbility());
-        registerAbility(new ArrowAshAbilityEX());
     }
 }

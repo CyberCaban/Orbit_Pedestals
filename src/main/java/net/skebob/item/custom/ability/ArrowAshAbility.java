@@ -14,6 +14,9 @@ import net.minecraft.world.World;
 import net.skebob.item.ModItems;
 
 public class ArrowAshAbility extends AshAbility {
+    public ArrowAshAbility() {
+        super(5);
+    }
     @Override
     public void use(PlayerEntity player, World world, Hand hand, ItemStack stack) {
         if (!world.isClient &&

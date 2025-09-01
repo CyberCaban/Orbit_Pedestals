@@ -30,7 +30,7 @@ public class HandledScreenMixin {
                     isRightClick) {
                String abilityId = (String) stack.get(ModComponents.AOW_INFUSABLE);
                AshAbility ability = AoWAbilities.ABILITIES.get(abilityId);
-               Item item = ModItems.AOW_ABILITIES.get(ability);
+               Item item = ModItems.AOW_ABILITIES.get((AshAbility) ability);
                ItemStack newItem = new ItemStack(item, 1);
 
                if (!player.getInventory().insertStack(newItem)) {

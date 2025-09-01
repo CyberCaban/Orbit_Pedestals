@@ -41,12 +41,13 @@ public class ModItems {
 
     public static final Item MAGIC_PAPER=register("magic_paper",Item::new,new Item.Settings());
     public static final Item EMPTY_ASH = register("empty_ash",Item::new,new Item.Settings());
-    public static final Item WIND_ASH = register("wind_aow", settings -> new AoWItem(settings, new WindAshAbility()), new Item.Settings());
-    public static final Item ARROW_ASH = register("arrow_aow", settings -> new AoWItem(settings, new ArrowAshAbility()), new Item.Settings());
-   public static final Item ARROW_EX_ASH = register("arrow_ex_aow",settings -> new AoWItem(settings,new ArrowAshAbilityEX()),new Item.Settings());
+    public static final Item WIND_ASH = register("wind_aow", settings -> new AoWItem(settings, AoWAbilities.WIND_ASH_ABILITY), new Item.Settings());
+    public static final Item ARROW_ASH = register("arrow_aow", settings -> new AoWItem(settings, AoWAbilities.ARROW_ASH_ABILITY), new Item.Settings());
+   public static final Item ARROW_EX_ASH = register("arrow_ex_aow",settings -> new AoWItem(settings, AoWAbilities.ARROW_EX_ASH_ABILITY), new Item.Settings());
     public static final Map<AshAbility, Item> AOW_ABILITIES = Map.of(
-            new WindAshAbility(), WIND_ASH,
-            new ArrowAshAbility(), ARROW_ASH
+            AoWAbilities.WIND_ASH_ABILITY, WIND_ASH,
+            AoWAbilities.ARROW_ASH_ABILITY, ARROW_ASH,
+            AoWAbilities.ARROW_EX_ASH_ABILITY, ARROW_EX_ASH
     );
 
     public static void registerModItems() {
