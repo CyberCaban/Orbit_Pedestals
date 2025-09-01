@@ -1,16 +1,14 @@
-package net.skebob.events;
+package net.skebob.event;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.component.ComponentType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
-import net.skebob.item.ModComponents;
 import net.skebob.item.custom.ability.AoWAbilities;
 import net.skebob.item.custom.ability.AshAbility;
 
@@ -26,6 +24,7 @@ public class ModEvents {
             ) {
                 startActivating(is);
                 playerEntity.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 0.5f, 1.0f);
+                return ActionResult.SUCCESS;
             }
             return ActionResult.PASS;
         });

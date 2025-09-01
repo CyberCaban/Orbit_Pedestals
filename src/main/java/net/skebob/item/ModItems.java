@@ -43,11 +43,13 @@ public class ModItems {
     public static final Item EMPTY_ASH = register("empty_ash",Item::new,new Item.Settings());
     public static final Item WIND_ASH = register("wind_aow", settings -> new AoWItem(settings, AoWAbilities.WIND_ASH_ABILITY), new Item.Settings());
     public static final Item ARROW_ASH = register("arrow_aow", settings -> new AoWItem(settings, AoWAbilities.ARROW_ASH_ABILITY), new Item.Settings());
-   public static final Item ARROW_EX_ASH = register("arrow_ex_aow",settings -> new AoWItem(settings, AoWAbilities.ARROW_EX_ASH_ABILITY), new Item.Settings());
+    public static final Item ARROW_EX_ASH = register("arrow_ex_aow",settings -> new AoWItem(settings, AoWAbilities.ARROW_EX_ASH_ABILITY), new Item.Settings());
+    public static final Item GLINTSTONE_ASH = register("glintstone_aow", settings -> new AoWItem(settings, AoWAbilities.GLINTSTONE_ASH_ABILITY), new Item.Settings());
     public static final Map<AshAbility, Item> AOW_ABILITIES = Map.of(
             AoWAbilities.WIND_ASH_ABILITY, WIND_ASH,
             AoWAbilities.ARROW_ASH_ABILITY, ARROW_ASH,
-            AoWAbilities.ARROW_EX_ASH_ABILITY, ARROW_EX_ASH
+            AoWAbilities.ARROW_EX_ASH_ABILITY, ARROW_EX_ASH,
+            AoWAbilities.GLINTSTONE_ASH_ABILITY, GLINTSTONE_ASH
     );
 
     public static void registerModItems() {

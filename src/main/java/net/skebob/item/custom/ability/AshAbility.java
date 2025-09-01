@@ -16,8 +16,8 @@ public abstract class AshAbility {
     public int getActivationTime() {
       return MAX_ACTIVATION_TIME;
     }
-    public void use(PlayerEntity player, World world, Hand hand, ItemStack stack) { }
-    public String getName() { return null; }
+    public abstract void use(PlayerEntity player, World world, Hand hand, ItemStack stack);
+    public abstract String getName();
 
     @Override
     public boolean equals(Object obj) {

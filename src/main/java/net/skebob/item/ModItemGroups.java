@@ -31,6 +31,7 @@ public class ModItemGroups {
                         entries.add(ModItems.WIND_ASH);
                         entries.add(ModItems.ARROW_ASH);
                         entries.add(ModItems.ARROW_EX_ASH);
+                        entries.add(ModItems.GLINTSTONE_ASH);
 
                         // BLOCKS
                         entries.add(ModBlocks.SKEBOB_BLOCK);

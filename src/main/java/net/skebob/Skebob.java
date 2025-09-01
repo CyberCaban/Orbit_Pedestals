@@ -1,24 +1,9 @@
 package net.skebob;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.component.ComponentType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
 import net.skebob.block.ModBlocks;
-import net.skebob.events.ModEvents;
+import net.skebob.entity.ModEntities;
+import net.skebob.event.ModEvents;
 import net.skebob.item.ModComponents;
 import net.skebob.item.ModItemGroups;
 import net.skebob.item.ModItems;
@@ -47,5 +32,6 @@ public class Skebob implements ModInitializer {
 		ModBlocks.registerModBlocks();
 		ModComponents.registerModComponents();
 		ModEvents.registerEvents();
+		ModEntities.registerEntities();
 	}
 }
