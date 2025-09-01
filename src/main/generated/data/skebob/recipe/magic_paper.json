@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "d": "skebob:skebob",
+    "l": "minecraft:lapis_lazuli",
+    "p": "minecraft:paper"
+  },
+  "pattern": [
+    "d l",
+    " p ",
+    "l d"
+  ],
+  "result": {
+    "count": 1,
+    "id": "skebob:magic_paper"
+  }
+}

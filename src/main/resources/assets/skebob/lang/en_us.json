@@ -9,7 +9,11 @@
   "item.skebob.god_skebob_sword" : "God Skebob Sword",
   "item.skebob.god_skebob_hoe" : "God Skebob Hoe",
   "item.skebob.god_skebob_shovel" : "God Skebob Shovel",
+  "item.skebob.magic_paper" : "Magic paper",
+  "item.skebob.empty_ash" : "Empty Ash",
+  "item.skebob.arrow_aow" : "Arrow Ash",
+  "item.skebob.wind_aow" : "Wind Ash",
+  "item.skebob.arrow_ex_aow" : "ArrowEX Ash",
 
-  "item.skebob.aow.tooltip": "Legendary Ash of War.\nRight click on weapon to apply and right click again to take out.",
-  "item.skebob.wind_aow": "Ash of War imbued with wind charge energy"
+  "item.skebob.aow.tooltip": "Legendary Ash of War.\nRight click on weapon to apply and right click again to take out."
 }

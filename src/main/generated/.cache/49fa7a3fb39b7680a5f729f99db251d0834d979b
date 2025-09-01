@@ -1,0 +1,4 @@
+// 1.21.8	-999999999-01-01T00:00:00	Skebob/Block Loot Tables
+be2ee5a2374dd0e265282aed6fe726afe043c272 data/skebob/loot_table/blocks/god_skebob_block.json
+ecaa39f576f9eb54652fc1db1956f3c1d40f0af1 data/skebob/loot_table/blocks/skebob_block.json
+04d9b12b2a9fbc194e947472828d8ba41359179d data/skebob/loot_table/blocks/skebob_smart_block.json
