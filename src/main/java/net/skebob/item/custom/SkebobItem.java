@@ -32,5 +32,6 @@ public class SkebobItem extends Item {
         textConsumer.accept(Text.translatable("item.skebob.skebob.tooltip"));
         super.appendTooltip(stack, context, displayComponent, textConsumer, type);
     }
+
 }
 
