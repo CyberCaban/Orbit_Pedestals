@@ -68,21 +68,30 @@ public class PedestalBlock extends BlockWithEntity implements BlockEntityProvide
             return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
         }
         ItemStack playerStackInHand = player.getStackInHand(hand);
-        if(pedestalBlockEntity.isEmpty() && !playerStackInHand.isEmpty()) {
-            pedestalBlockEntity.setStack(0, playerStackInHand.copyWithCount(1));
+        if(pedestalBlockEntity.hasRoom() && !playerStackInHand.isEmpty()) {
+            pedestalBlockEntity.push(playerStackInHand.copyWithCount(1));
             world.playSound(player, pos, SoundEvents.BLOCK_VAULT_INSERT_ITEM, SoundCategory.BLOCKS, 1f, 2f);
             playerStackInHand.decrement(1);
 
             world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
             pedestalBlockEntity.markDirty();
-        } else if(playerStackInHand.isEmpty() && !player.isSneaking()) {
-            ItemStack stackOnPedestal = pedestalBlockEntity.getStack(0);
-            player.setStackInHand(Hand.MAIN_HAND, stackOnPedestal);
-            world.playSound(player, pos, SoundEvents.BLOCK_VAULT_EJECT_ITEM, SoundCategory.BLOCKS, 1f, 1f);
-            pedestalBlockEntity.clear();
+        } else if(!player.isSneaking()) {
+            if (playerStackInHand.isEmpty()) {
+                ItemStack stackOnPedestal = pedestalBlockEntity.peek();
+                player.setStackInHand(Hand.MAIN_HAND, stackOnPedestal);
+                world.playSound(player, pos, SoundEvents.BLOCK_VAULT_EJECT_ITEM, SoundCategory.BLOCKS, 1f, 1f);
+                pedestalBlockEntity.pop();
 
-            world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
-            pedestalBlockEntity.markDirty();
+                world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+                pedestalBlockEntity.markDirty();
+            } else if (playerStackInHand.getItem() == pedestalBlockEntity.peek().getItem()) {
+                playerStackInHand.increment(1);
+                world.playSound(player, pos, SoundEvents.BLOCK_VAULT_EJECT_ITEM, SoundCategory.BLOCKS, 1f, 1f);
+                pedestalBlockEntity.pop();
+
+                world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+                pedestalBlockEntity.markDirty();
+            }
         } else if(player.isSneaking() && !world.isClient()) {
             player.openHandledScreen((NamedScreenHandlerFactory) pedestalBlockEntity);
         }

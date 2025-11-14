@@ -11,7 +11,6 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.ItemScatterer;
@@ -23,8 +22,10 @@ import net.skebob.block.entity.ImplementedInventory;
 import net.skebob.block.entity.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.stream.Collectors;
+
 public class PedestalBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory {
-    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(99, ItemStack.EMPTY);
     private float rotation = 0;
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
@@ -35,11 +36,62 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     public DefaultedList<ItemStack> getItems() {
         return inventory;
     }
+    public DefaultedList<ItemStack> getNonNullItems() {
+        return inventory.stream().filter(itemStack -> !itemStack.isEmpty())
+                .collect(Collectors.toCollection(DefaultedList::of));
+    }
+
+    public void push(ItemStack item) {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).isEmpty()) {
+                inventory.set(i, item);
+                break;
+            }
+        }
+    }
+
+    public void pop() {
+        for (int i = inventory.size()-1; i >= 0; i--) {
+            if (!inventory.get(i).isEmpty()) {
+                inventory.set(i, ItemStack.EMPTY);
+                break;
+            }
+        }
+//        for (ItemStack item : getItems().reversed()) {
+//            if (!item.isEmpty()) {
+//                getItems().remove(item);
+//            }
+//        }
+    }
+
+    public ItemStack peek() {
+        for (ItemStack item : getItems().reversed()) {
+            if (!item.isEmpty()) {
+                return item;
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public boolean hasRoom() {
+        for (ItemStack item : getItems()) {
+            if (item.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public float getRenderingRotation() {
-        rotation += 0.5f;
-        if (rotation > 360) rotation = 0;
         return rotation;
+    }
+
+    public void updateRotation() {
+        updateRotation(0.5f);
+    }
+    public void updateRotation(float rotation) {
+        this.rotation += rotation;
+        if (this.rotation > 360) this.rotation = 0;
     }
 
     @Override
