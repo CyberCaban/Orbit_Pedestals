@@ -15,5 +15,7 @@
   "item.skebob.wind_aow" : "Wind Ash",
   "item.skebob.arrow_ex_aow" : "ArrowEX Ash",
 
-  "item.skebob.aow.tooltip": "Legendary Ash of War.\nRight click on weapon to apply and right click again to take out."
+  "item.skebob.aow.tooltip": "Legendary Ash of War.\nRight click on weapon to apply and right click again to take out.",
+
+  "item.skebob.pedestal_block": "Pedestal"
 }

@@ -2,6 +2,7 @@ package net.skebob;
 
 import net.fabricmc.api.ModInitializer;
 import net.skebob.block.ModBlocks;
+import net.skebob.block.entity.ModBlockEntities;
 import net.skebob.entity.ModEntities;
 import net.skebob.event.ModEvents;
 import net.skebob.item.ModComponents;
@@ -33,5 +34,6 @@ public class Skebob implements ModInitializer {
 		ModComponents.registerModComponents();
 		ModEvents.registerEvents();
 		ModEntities.registerEntities();
+		ModBlockEntities.registerBlockEntities();
 	}
 }

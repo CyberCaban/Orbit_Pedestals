@@ -1,17 +1,14 @@
 package net.skebob.block;
 
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.skebob.Skebob;
 
@@ -80,6 +77,10 @@ public class ModBlocks {
             ,
             true
     );
+
+    public static final Block PEDESTAL_BLOCK = register("pedestal_block", PedestalBlock::new,
+            AbstractBlock.Settings.create().requiresTool().nonOpaque(),
+            true);
 
     public static void registerModBlocks() {
         Skebob.LOGGER.info("Registering Mod Blocks for " + Skebob.MOD_ID);

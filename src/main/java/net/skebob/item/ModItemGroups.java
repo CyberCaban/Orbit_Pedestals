@@ -37,6 +37,7 @@ public class ModItemGroups {
                         entries.add(ModBlocks.SKEBOB_BLOCK);
                         entries.add(ModBlocks.SKEBOB_SMART_BLOCK);
                         entries.add(ModBlocks.GOD_SKEBOB);
+                        entries.add(ModBlocks.PEDESTAL_BLOCK);
                     })
                     .build());
     public static void registerItemGroups() {
