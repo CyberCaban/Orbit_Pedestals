@@ -2,6 +2,7 @@ package net.skebob.block;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -79,7 +80,9 @@ public class ModBlocks {
     );
 
     public static final Block PEDESTAL_BLOCK = register("pedestal_block", PedestalBlock::new,
-            AbstractBlock.Settings.create().requiresTool().nonOpaque(),
+            AbstractBlock.Settings.create().requiresTool().nonOpaque().pistonBehavior(
+                    PistonBehavior.NORMAL
+            ),
             true);
 
     public static void registerModBlocks() {
