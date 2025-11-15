@@ -166,7 +166,7 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
 
     @Override
     public Text getDisplayName() {
-        return Text.literal("Pedestal");
+        return Text.translatable(getCachedState().getBlock().getTranslationKey());
     }
 
     @Override

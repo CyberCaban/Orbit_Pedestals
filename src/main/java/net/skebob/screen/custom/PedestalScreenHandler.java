@@ -20,7 +20,7 @@ public class PedestalScreenHandler extends ScreenHandler {
     public PedestalScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity) {
         super(ModScreenHandlers.PEDESTAL_SCREEN_HANDLER, syncId);
         this.inventory = (Inventory) blockEntity;
-        this.addSlot(new Slot(inventory, 0, 80, 35));
+        add27Slots(inventory);
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
     }
@@ -52,6 +52,19 @@ public class PedestalScreenHandler extends ScreenHandler {
     @Override
     public boolean canUse(PlayerEntity player) {
         return this.inventory.canPlayerUse(player);
+    }
+
+    private void add27Slots(Inventory inventory) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
+                this.addSlot(new Slot(inventory, j + i * 9, 8 + j * 18, 18 + i * 18) {
+                    @Override
+                    public int getMaxItemCount() {
+                        return 1;
+                    }
+                });
+            }
+        }
     }
 
     private void addPlayerInventory(PlayerInventory playerInventory) {
