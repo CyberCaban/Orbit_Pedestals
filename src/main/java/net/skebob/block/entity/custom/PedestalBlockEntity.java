@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 public class PedestalBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(99, ItemStack.EMPTY);
+    private PedestalRenderConfig renderConfig = PedestalRenderConfig.defaultSingleItem();
     private float rotation = 0;
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
@@ -57,11 +58,6 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
                 break;
             }
         }
-//        for (ItemStack item : getItems().reversed()) {
-//            if (!item.isEmpty()) {
-//                getItems().remove(item);
-//            }
-//        }
     }
 
     public ItemStack peek() {
@@ -84,6 +80,12 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
 
     public float getRenderingRotation() {
         return rotation;
+    }
+    public void setRenderConfig(PedestalRenderConfig renderConfig) {
+        this.renderConfig = renderConfig;
+    }
+    public PedestalRenderConfig getRenderConfig() {
+        return renderConfig;
     }
 
     public void updateRotation() {
