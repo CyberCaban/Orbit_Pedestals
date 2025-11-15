@@ -1,8 +1,11 @@
 package net.skebob.block.entity.custom;
 
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
@@ -11,8 +14,11 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
+import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -20,11 +26,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.skebob.block.entity.ImplementedInventory;
 import net.skebob.block.entity.ModBlockEntities;
+import net.skebob.screen.custom.PedestalScreenHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Collectors;
 
-public class PedestalBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory {
+public class PedestalBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, ExtendedScreenHandlerFactory<BlockPos> {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(99, ItemStack.EMPTY);
     private PedestalRenderConfig renderConfig = PedestalRenderConfig.defaultSingleItem();
     private float rotation = 0;
@@ -150,5 +157,20 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     protected void onViewerCountUpdate(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
         Block block = state.getBlock();
         world.addSyncedBlockEvent(pos, block, 1, newViewerCount);
+    }
+
+    @Override
+    public BlockPos getScreenOpeningData(ServerPlayerEntity player) {
+        return this.pos;
+    }
+
+    @Override
+    public Text getDisplayName() {
+        return Text.literal("Pedestal");
+    }
+
+    @Override
+    public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+        return new PedestalScreenHandler(syncId, playerInventory, this.pos);
     }
 }

@@ -9,6 +9,7 @@ import net.skebob.item.ModComponents;
 import net.skebob.item.ModItemGroups;
 import net.skebob.item.ModItems;
 import net.skebob.item.custom.ability.AoWAbilities;
+import net.skebob.screen.ModScreenHandlers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,5 +36,6 @@ public class Skebob implements ModInitializer {
 		ModEvents.registerEvents();
 		ModEntities.registerEntities();
 		ModBlockEntities.registerBlockEntities();
+		ModScreenHandlers.registerScreenHandlers();
 	}
 }
