@@ -71,11 +71,9 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
         Vec3d offset = renderConfig.itemOffset();
         matrices.translate(offset.x, offset.y, offset.z);
 
-        if (renderConfig.singleItemLevitation()) {
-            float levitation = (float) sin(entity.getRenderingRotation() * renderConfig.levitationSpeed())
-                    * renderConfig.levitationAmplitude();
-            matrices.translate(0, levitation, 0);
-        }
+        float levitation = (float) sin(entity.getRenderingRotation() * renderConfig.levitationSpeed())
+                * renderConfig.levitationAmplitude();
+        matrices.translate(0, levitation, 0);
 
         Vec3d rotation = renderConfig.itemRotation().add(renderConfig.rotationStep().multiply(entity.getRenderingRotation()));
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) rotation.x));
@@ -106,21 +104,23 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
             float x = (float) cos(angle) * radius;
             float z = (float) sin(angle) * radius;
 
-            float baseY = renderConfig.baseHeight();
-            matrices.translate(0.5f + x, baseY, 0.5f + z);
+            Vec3d offset = renderConfig.itemOffset();
+            float delta = renderConfig.multiItemLevitationAmplitude();
+            float fx = (float) (x * cos(angle) + z * sin(angle));
+            float fz = (float) (z * cos(angle) - x * sin(angle));
+            matrices.translate((offset.x + x), offset.y + (fx*fz*delta), (offset.z + z));
 
-            if (renderConfig.multiItemLevitation()) {
-                float levitation = (float) cos(angle) * renderConfig.multiItemLevitationAmplitude();
-                matrices.translate(0, levitation, 0);
-            }
+            float levitation = (float) sin(angle * renderConfig.levitationSpeed())
+                    * renderConfig.levitationAmplitude();
+            matrices.translate(0, levitation, 0);
 
             if (items.get(i).isOf(Items.END_CRYSTAL)) {
                 renderEndCrystalEntity(entity, matrices, vertexConsumers, light);
             } else {
                 float scale = renderConfig.itemScale();
+                matrices.scale(-scale, scale, -scale);
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getRenderingRotation() + (i * 360f / items.size())));
                 matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45f * x * z));
-                matrices.scale(-scale, scale, -scale);
 
                 if (entity.getWorld() != null) {
                     itemRenderer.renderItem(items.get(i), ItemDisplayContext.GUI,

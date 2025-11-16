@@ -1,5 +1,6 @@
 package net.skebob.screen.custom;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,22 +10,32 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
+import net.skebob.block.entity.custom.PedestalBlockEntity;
+import net.skebob.block.entity.custom.PedestalRenderConfig;
 import net.skebob.screen.ModScreenHandlers;
 import org.jetbrains.annotations.Nullable;
 
 public class PedestalScreenHandler extends ScreenHandler {
     private final Inventory inventory;
+    private final PedestalBlockEntity blockEntity;
     public PedestalScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos blockPos) {
         this(syncId, playerInventory, playerInventory.player.getWorld().getBlockEntity(blockPos));
     }
     public PedestalScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity) {
         super(ModScreenHandlers.PEDESTAL_SCREEN_HANDLER, syncId);
         this.inventory = (Inventory) blockEntity;
-        add27Slots(inventory);
-        addPlayerInventory(playerInventory);
-        addPlayerHotbar(playerInventory);
+        this.blockEntity = (PedestalBlockEntity) blockEntity;
+//        add27Slots(inventory);
+//        addPlayerInventory(playerInventory);
+//        addPlayerHotbar(playerInventory);
     }
 
+    public PedestalRenderConfig getRenderConfig() {
+        return blockEntity.getRenderConfig();
+    }
+    public BlockPos getBlockPos() {
+        return blockEntity.getPos();
+    }
     @Override
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;

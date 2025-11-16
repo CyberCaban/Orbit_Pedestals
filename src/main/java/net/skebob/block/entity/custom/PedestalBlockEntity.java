@@ -23,6 +23,7 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.skebob.block.entity.ImplementedInventory;
 import net.skebob.block.entity.ModBlockEntities;
@@ -30,6 +31,8 @@ import net.skebob.screen.custom.PedestalScreenHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Collectors;
+
+import static net.skebob.block.entity.custom.PedestalRenderConfig.Builder.configToBuilder;
 
 public class PedestalBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, ExtendedScreenHandlerFactory<BlockPos> {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(99, ItemStack.EMPTY);
@@ -90,6 +93,36 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     }
     public void setRenderConfig(PedestalRenderConfig renderConfig) {
         this.renderConfig = renderConfig;
+        markDirty();
+        if (world != null && !world.isClient) {
+            world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), Block.NOTIFY_ALL);
+        }
+    }
+    public void updateConfigField(String fieldName, float value) {
+        PedestalRenderConfig.Builder builder = configToBuilder(renderConfig);
+        switch (fieldName) {
+            case "rotationSpeed" -> builder.rotationSpeed(value);
+            case "baseHeight" -> builder.baseHeight(value);
+            case "singleItemScale" -> builder.singleItemScale(value);
+            case "levitationAmplitude" -> builder.levitationAmplitude(value);
+            case "levitationSpeed" -> builder.levitationSpeed(value);
+            case "radius" -> builder.radius(value);
+            case "multiItemLevitationAmplitude" -> builder.multiItemLevitationAmplitude(value);
+            case "crystalScale" -> builder.crystalScale(value);
+        }
+        setRenderConfig(builder.build());
+    }
+
+    public void updateConfigField(String fieldName, Vec3d value) {
+        PedestalRenderConfig.Builder builder = configToBuilder(renderConfig);
+
+        switch (fieldName) {
+            case "itemOffset" -> builder.singleItemOffset(value);
+            case "itemRotation" -> builder.itemRotation(value);
+            case "rotationStep" -> builder.rotationStep(value);
+        }
+
+        setRenderConfig(builder.build());
     }
     public PedestalRenderConfig getRenderConfig() {
         return renderConfig;
@@ -107,12 +140,63 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     protected void writeData(WriteView view) {
         super.writeData(view);
         Inventories.writeData(view, inventory);
+        writeRenderConfigToNbt(view);
+        view.putFloat("rotation", rotation);
     }
 
     @Override
     protected void readData(ReadView view) {
         super.readData(view);
         Inventories.readData(view, inventory);
+        this.renderConfig = readRenderConfigFromNbt(view);
+        this.rotation = view.getFloat("rotation", 0f);
+    }
+
+    private void writeRenderConfigToNbt(WriteView view) {
+        view.putFloat("cfg_rotationSpeed", renderConfig.rotationSpeed());
+        view.putFloat("cfg_baseHeight", renderConfig.baseHeight());
+        view.putFloat("cfg_itemScale", renderConfig.itemScale());
+        view.putFloat("cfg_levitationAmplitude", renderConfig.levitationAmplitude());
+        view.putFloat("cfg_levitationSpeed", renderConfig.levitationSpeed());
+        view.putFloat("cfg_radius", renderConfig.radius());
+        view.putFloat("cfg_multiItemLevitationAmplitude", renderConfig.multiItemLevitationAmplitude());
+        view.putFloat("cfg_crystalScale", renderConfig.crystalScale());
+        view.putBoolean("cfg_crystalShowBottom", renderConfig.crystalShowBottom());
+
+        writeVec3dToNbt(view, "cfg_offset", renderConfig.itemOffset());
+        writeVec3dToNbt(view, "cfg_rotation", renderConfig.itemRotation());
+        writeVec3dToNbt(view, "cfg_rotStep", renderConfig.rotationStep());
+    }
+
+    private PedestalRenderConfig readRenderConfigFromNbt(ReadView view) {
+        return new PedestalRenderConfig.Builder()
+                .rotationSpeed(view.getFloat("cfg_rotationSpeed", PedestalRenderConfig.DEFAULT_ROTATION_SPEED))
+                .baseHeight(view.getFloat("cfg_baseHeight", PedestalRenderConfig.DEFAULT_BASE_HEIGHT))
+                .singleItemScale(view.getFloat("cfg_itemScale", PedestalRenderConfig.DEFAULT_SINGLE_ITEM_SCALE))
+                .levitationAmplitude(view.getFloat("cfg_levitationAmplitude", PedestalRenderConfig.DEFAULT_LEVITATION_AMPLITUDE))
+                .levitationSpeed(view.getFloat("cfg_levitationSpeed", PedestalRenderConfig.DEFAULT_LEVITATION_SPEED))
+                .radius(view.getFloat("cfg_radius", PedestalRenderConfig.DEFAULT_RADIUS))
+                .multiItemLevitationAmplitude(view.getFloat("cfg_multiItemLevitationAmplitude", PedestalRenderConfig.DEFAULT_MULTI_ITEM_LEVITATION_AMPLITUDE))
+                .crystalScale(view.getFloat("cfg_crystalScale", PedestalRenderConfig.DEFAULT_CRYSTAL_SCALE))
+                .crystalShowBottom(view.getBoolean("cfg_crystalShowBottom", PedestalRenderConfig.DEFAULT_CRYSTAL_SHOW_BOTTOM))
+                .singleItemOffset(readVec3dFromNbt(view, "cfg_offset", PedestalRenderConfig.DEFAULT_SINGLE_ITEM_OFFSET))
+                .itemRotation(readVec3dFromNbt(view, "cfg_rotation", PedestalRenderConfig.DEFAULT_SINGLE_ITEM_ROTATION))
+                .rotationStep(readVec3dFromNbt(view, "cfg_rotStep", PedestalRenderConfig.DEFAULT_ROTATION_STEP))
+                .build();
+    }
+
+    private void writeVec3dToNbt(WriteView view, String prefix, Vec3d vec) {
+        view.putDouble(prefix + "X", vec.x);
+        view.putDouble(prefix + "Y", vec.y);
+        view.putDouble(prefix + "Z", vec.z);
+    }
+
+    private Vec3d readVec3dFromNbt(ReadView view, String prefix, Vec3d defaultValue) {
+        return new Vec3d(
+                view.getDouble(prefix + "X", defaultValue.x),
+                view.getDouble(prefix + "Y", defaultValue.y),
+                view.getDouble(prefix + "Z", defaultValue.z)
+        );
     }
 
     @Override
@@ -166,7 +250,7 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable(getCachedState().getBlock().getTranslationKey());
+        return Text.literal("");
     }
 
     @Override
