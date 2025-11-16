@@ -80,9 +80,13 @@ public class ModBlocks {
     );
 
     public static final Block PEDESTAL_BLOCK = register("pedestal_block", PedestalBlock::new,
-            AbstractBlock.Settings.create().requiresTool().nonOpaque().pistonBehavior(
-                    PistonBehavior.NORMAL
-            ),
+            AbstractBlock.Settings.create()
+                    .nonOpaque()
+                    .strength(1f)
+                    .hardness(1f)
+                    .requiresTool()
+                    .sounds(BlockSoundGroup.STONE)
+            ,
             true);
 
     public static void registerModBlocks() {

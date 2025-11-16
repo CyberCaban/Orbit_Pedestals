@@ -135,6 +135,15 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         0.1f,
                         300,
                         "skebob");
+
+                createShaped(RecipeCategory.MISC, ModBlocks.PEDESTAL_BLOCK)
+                        .pattern("lll")
+                        .pattern(" s ")
+                        .pattern("sss")
+                        .input('s', Items.SMOOTH_STONE)
+                        .input('l', Items.SMOOTH_STONE_SLAB)
+                        .criterion(hasItem(Items.SMOOTH_STONE), conditionsFromItem(Items.SMOOTH_STONE))
+                        .offerTo(exporter);
             }
         };
     }

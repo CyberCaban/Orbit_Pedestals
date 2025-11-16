@@ -38,5 +38,6 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
                                 .with(ItemEntry.builder(ModBlocks.SKEBOB_BLOCK))
                         )
         );
+        addDrop(ModBlocks.PEDESTAL_BLOCK);
     }
 }

@@ -19,6 +19,7 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(ModBlocks.SKEBOB_BLOCK)
                 .add(ModBlocks.SKEBOB_SMART_BLOCK)
                 .add(ModBlocks.GOD_SKEBOB)
+                .add(ModBlocks.PEDESTAL_BLOCK)
                 ;
     }
 }
