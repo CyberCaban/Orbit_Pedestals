@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "net.orbit_pedestals.mixin.client",
+	"package": "net.orbit.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
 		"ExampleClientMixin"

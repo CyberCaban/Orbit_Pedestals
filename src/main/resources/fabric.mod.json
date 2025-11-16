@@ -16,13 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-          "net.orbit_pedestals.OrbitPedestals"
+          "net.orbit.OrbitPedestals"
 		],
 		"client": [
-			"net.orbit_pedestals.OrbitPedestalsClient"
+			"net.orbit.OrbitPedestalsClient"
 		],
 		"fabric-datagen": [
-			"net.orbit_pedestals.datagen.OrbitPedestalsDatagen"
+			"net.orbit.datagen.OrbitPedestalsDatagen"
 		]
 	},
 	"mixins": [
