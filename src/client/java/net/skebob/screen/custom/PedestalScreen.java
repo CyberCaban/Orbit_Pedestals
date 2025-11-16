@@ -70,7 +70,7 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
         ));
         currentY += spacingY;
 
-        // Offset Vec3d - три отдельных поля
+        // Offset Vec3d
         currentY = addVec3dFields(
                 startX, currentY, width, height, spacingY,
                 "Offset",
@@ -115,7 +115,7 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
         ));
         currentY += spacingY;
 
-        // Rotation Vec3d - три отдельных поля
+        // Rotation Vec3d
         currentY = addVec3dFields(
                 column2X, currentY, width, height, spacingY,
                 "Rotation",
@@ -130,17 +130,13 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
         );
     }
 
-    /**
-     * Добавляет три поля для редактирования Vec3d (X, Y, Z)
-     * @return новую позицию Y после добавления всех полей
-     */
     private int addVec3dFields(int x, int y, int width, int height, int spacing,
                                String labelPrefix, Vec3d initialValue,
                                float minValue, float maxValue, float step,
                                String fieldName,
                                Supplier<Vec3d> currentValueGetter,
                                Consumer<Vec3d> onUpdate) {
-        // Заголовок группы (опционально)
+        // Group Label
         addDrawableChild(new TextWidget(
                 x, y, width, 10,
                 Text.literal(labelPrefix + ":"),
@@ -148,7 +144,7 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
         ).alignLeft().setTextColor(0xFFFF55));
         y += 12;
 
-        // X компонент
+        // X component
         addDrawableChild(new NumericInputWidget(
                 x, y, width, height,
                 Text.literal("  X"),
@@ -161,7 +157,7 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
         ));
         y += spacing;
 
-        // Y компонент
+        // Y component
         addDrawableChild(new NumericInputWidget(
                 x, y, width, height,
                 Text.literal("  Y"),
@@ -174,7 +170,7 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
         ));
         y += spacing;
 
-        // Z компонент
+        // Z component
         addDrawableChild(new NumericInputWidget(
                 x, y, width, height,
                 Text.literal("  Z"),
@@ -191,14 +187,12 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
     }
 
     private void sendConfigUpdate(String fieldName, float value) {
-        Skebob.LOGGER.info("Sending config update to {}: {}", fieldName, value);
         ClientPlayNetworking.send(new UpdatePedestalFloatPayload(
                 handler.getBlockPos(), fieldName, value
         ));
     }
 
     private void sendConfigUpdate(String fieldName, Vec3d value) {
-        Skebob.LOGGER.info("Sending config update to {}: {}", fieldName, value);
         ClientPlayNetworking.send(new UpdatePedestalVec3dPayload(
                 handler.getBlockPos(), fieldName, value
         ));

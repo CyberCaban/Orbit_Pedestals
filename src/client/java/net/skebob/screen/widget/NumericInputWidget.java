@@ -9,7 +9,6 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.TextWidget;
 import net.minecraft.text.Text;
-import net.skebob.Skebob;
 
 import java.util.function.Consumer;
 
@@ -35,21 +34,20 @@ public class NumericInputWidget extends ClickableWidget {
         this.step = step;
         this.onChange = onChange;
 
-        // Позиционирование компонентов
         int labelWidth = 70;
         int buttonWidth = 18;
         int fieldWidth = width - labelWidth - buttonWidth * 2 - 4;
 
-        // TextWidget для лейбла
+        // Label
         this.labelWidget = new TextWidget(
                 x, y, labelWidth, height,
                 label,
                 MinecraftClient.getInstance().textRenderer
         );
-        labelWidget.alignLeft(); // Выравнивание текста слева
-        labelWidget.setTextColor(0xFFFFFF); // Белый цвет
+        labelWidget.alignLeft();
+        labelWidget.setTextColor(0xFFFFFF);
 
-        // TextFieldWidget для ввода значения
+        // Number input
         this.textField = new TextFieldWidget(
                 MinecraftClient.getInstance().textRenderer,
                 x + labelWidth + 2, y, fieldWidth, height,
@@ -60,7 +58,7 @@ public class NumericInputWidget extends ClickableWidget {
         textField.setChangedListener(this::onTextChanged);
         textField.setEditable(true);
 
-        // Кнопки + и -
+        // +- buttons
         this.decrementButton = ButtonWidget.builder(
                         Text.literal("-"),
                         button -> adjustValue(-step)
@@ -88,13 +86,11 @@ public class NumericInputWidget extends ClickableWidget {
                 onChange.accept(value);
             }
         } catch (NumberFormatException ignored) {
-            Skebob.LOGGER.error("NumberFormatException", ignored);
         }
     }
 
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-        // Отрисовка всех компонентов
         labelWidget.render(context, mouseX, mouseY, deltaTicks);
         textField.render(context, mouseX, mouseY, deltaTicks);
         decrementButton.render(context, mouseX, mouseY, deltaTicks);
@@ -107,7 +103,6 @@ public class NumericInputWidget extends ClickableWidget {
         boolean decrementClicked = decrementButton.mouseClicked(mouseX, mouseY, button);
         boolean incrementClicked = incrementButton.mouseClicked(mouseX, mouseY, button);
 
-        // Устанавливаем фокус на текстовое поле если по нему кликнули
         if (textFieldClicked) {
             textField.setFocused(true);
         }

@@ -30,7 +30,6 @@ public record UpdatePedestalVec3dPayload(
                     UpdatePedestalVec3dPayload::new
             );
 
-    // Вспомогательный конструктор для удобства
     public UpdatePedestalVec3dPayload(BlockPos pos, String fieldName, Vec3d vec) {
         this(pos, fieldName, vec.x, vec.y, vec.z);
     }
