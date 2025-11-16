@@ -1,17 +1,18 @@
 package net.skebob.block;
 
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import net.skebob.Skebob;
+import net.skebob.OrbitPedestals;
 
 import java.util.function.Function;
 
@@ -40,44 +41,44 @@ public class ModBlocks {
     }
 
     private static RegistryKey<Block> keyOfBlock(String name) {
-        return RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Skebob.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(OrbitPedestals.MOD_ID, name));
     }
 
     private static RegistryKey<Item> keyOfItem(String name) {
-        return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Skebob.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(OrbitPedestals.MOD_ID, name));
     }
-    public static final Block SKEBOB_BLOCK = register("skebob_block",
-            Block::new,
-            AbstractBlock.Settings.create()
-                    .strength(20000f)
-                    .hardness(0.9999f)
-                    .requiresTool()
-                    .sounds(BlockSoundGroup.METAL)
-            ,
-            true
-            );
-    public static final Block GOD_SKEBOB = register("god_skebob_block",
-            GodSkebobBlock::new,
-            AbstractBlock.Settings.create()
-                    .strength(1f)
-                    .hardness(1f)
-                    .requiresTool()
-                    .sounds(BlockSoundGroup.ANVIL)
-            ,
-                true
-    );
-
-    public static final Block SKEBOB_SMART_BLOCK = register("skebob_smart_block",
-            SmartSkebobBlock::new,
-            AbstractBlock.Settings.create()
-                    .strength(1f)
-                    .hardness(1f)
-                    .requiresTool()
-                    .luminance(value -> value.get(SmartSkebobBlock.CLICKED) ? 15 : 0)
-                    .sounds(BlockSoundGroup.HONEY)
-            ,
-            true
-    );
+//    public static final Block SKEBOB_BLOCK = register("skebob_block",
+//            Block::new,
+//            AbstractBlock.Settings.create()
+//                    .strength(20000f)
+//                    .hardness(0.9999f)
+//                    .requiresTool()
+//                    .sounds(BlockSoundGroup.METAL)
+//            ,
+//            true
+//            );
+//    public static final Block GOD_SKEBOB = register("god_skebob_block",
+//            GodSkebobBlock::new,
+//            AbstractBlock.Settings.create()
+//                    .strength(1f)
+//                    .hardness(1f)
+//                    .requiresTool()
+//                    .sounds(BlockSoundGroup.ANVIL)
+//            ,
+//                true
+//    );
+//
+//    public static final Block SKEBOB_SMART_BLOCK = register("skebob_smart_block",
+//            SmartSkebobBlock::new,
+//            AbstractBlock.Settings.create()
+//                    .strength(1f)
+//                    .hardness(1f)
+//                    .requiresTool()
+//                    .luminance(value -> value.get(SmartSkebobBlock.CLICKED) ? 15 : 0)
+//                    .sounds(BlockSoundGroup.HONEY)
+//            ,
+//            true
+//    );
 
     public static final Block PEDESTAL_BLOCK = register("pedestal_block", PedestalBlock::new,
             AbstractBlock.Settings.create()
@@ -90,6 +91,9 @@ public class ModBlocks {
             true);
 
     public static void registerModBlocks() {
-        Skebob.LOGGER.info("Registering Mod Blocks for " + Skebob.MOD_ID);
+        OrbitPedestals.LOGGER.info("Registering Mod Blocks for " + OrbitPedestals.MOD_ID);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(fabricItemGroupEntries -> {
+            fabricItemGroupEntries.add(ModBlocks.PEDESTAL_BLOCK);
+        });
     }
 }

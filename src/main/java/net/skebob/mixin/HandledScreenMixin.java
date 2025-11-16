@@ -20,26 +20,26 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class HandledScreenMixin {
     @Inject(method = "onSlotClick", at = @At("HEAD"), cancellable = true)
     private void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo ci) {
-        if (slotIndex >= 0) {
-            ScreenHandler handler = (ScreenHandler) (Object) this;
-            Slot slot = handler.getSlot(slotIndex);
-            ItemStack stack = slot.getStack();
-            boolean isRightClick = button == 1;
-            if (!stack.isEmpty() &&
-                    stack.contains(ModComponents.AOW_INFUSABLE) &&
-                    isRightClick) {
-               String abilityId = (String) stack.get(ModComponents.AOW_INFUSABLE);
-               AshAbility ability = AoWAbilities.ABILITIES.get(abilityId);
-               Item item = ModItems.AOW_ABILITIES.get(ability);
-               ItemStack newItem = new ItemStack(item, 1);
-
-               if (!player.getInventory().insertStack(newItem)) {
-                   player.dropItem(newItem, false);
-               }
-               stack.remove(ModComponents.AOW_INFUSABLE);
-               ci.cancel();
-               player.playSound(SoundEvents.BLOCK_ANVIL_DESTROY, 1.0F, 1.0F);
-            }
-        }
+//        if (slotIndex >= 0) {
+//            ScreenHandler handler = (ScreenHandler) (Object) this;
+//            Slot slot = handler.getSlot(slotIndex);
+//            ItemStack stack = slot.getStack();
+//            boolean isRightClick = button == 1;
+//            if (!stack.isEmpty() &&
+//                    stack.contains(ModComponents.AOW_INFUSABLE) &&
+//                    isRightClick) {
+//               String abilityId = (String) stack.get(ModComponents.AOW_INFUSABLE);
+//               AshAbility ability = AoWAbilities.ABILITIES.get(abilityId);
+//               Item item = ModItems.AOW_ABILITIES.get(ability);
+//               ItemStack newItem = new ItemStack(item, 1);
+//
+//               if (!player.getInventory().insertStack(newItem)) {
+//                   player.dropItem(newItem, false);
+//               }
+//               stack.remove(ModComponents.AOW_INFUSABLE);
+//               ci.cancel();
+//               player.playSound(SoundEvents.BLOCK_ANVIL_DESTROY, 1.0F, 1.0F);
+//            }
+//        }
     }
 }

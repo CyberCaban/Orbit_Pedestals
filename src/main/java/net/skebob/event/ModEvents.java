@@ -22,26 +22,26 @@ public class ModEvents {
     private static final Map<UUID, Boolean> playerHoldingMap = new HashMap<>();
 
     public static void registerEvents() {
-        UseItemCallback.EVENT.register((playerEntity, world, hand) -> {
-            ItemStack is = playerEntity.getStackInHand(hand);
-            if (is.isIn(ItemTags.SWORDS) &&
-                    isAowInfusable(is) &&
-                    !isActivating(is)
-            ) {
-                startActivating(is);
-                playerEntity.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 0.5f, 1.0f);
-                playerHoldingMap.put(playerEntity.getUuid(), true);
-                return ActionResult.SUCCESS;
-            }
-            return ActionResult.PASS;
-        });
-
-        ServerTickEvents.END_SERVER_TICK.register(server -> {
-            for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
-                handleActivation(server, playerEntity);
-                checkIfStillHolding(playerEntity);
-            }
-        });
+//        UseItemCallback.EVENT.register((playerEntity, world, hand) -> {
+//            ItemStack is = playerEntity.getStackInHand(hand);
+//            if (is.isIn(ItemTags.SWORDS) &&
+//                    isAowInfusable(is) &&
+//                    !isActivating(is)
+//            ) {
+//                startActivating(is);
+//                playerEntity.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 0.5f, 1.0f);
+//                playerHoldingMap.put(playerEntity.getUuid(), true);
+//                return ActionResult.SUCCESS;
+//            }
+//            return ActionResult.PASS;
+//        });
+//
+//        ServerTickEvents.END_SERVER_TICK.register(server -> {
+//            for (ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()) {
+//                handleActivation(server, playerEntity);
+//                checkIfStillHolding(playerEntity);
+//            }
+//        });
 
 
     }

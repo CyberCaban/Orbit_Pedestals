@@ -16,13 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.skebob.Skebob"
+          "net.skebob.OrbitPedestals"
 		],
 		"client": [
-			"net.skebob.SkebobClient"
+			"net.skebob.OrbitPedestalsClient"
 		],
 		"fabric-datagen": [
-			"net.skebob.datagen.SkebobDataGen"
+			"net.skebob.datagen.OrbitPedestalsDatagen"
 		]
 	},
 	"mixins": [

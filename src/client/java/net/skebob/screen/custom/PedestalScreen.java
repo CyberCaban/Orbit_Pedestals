@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.skebob.Skebob;
+import net.skebob.OrbitPedestals;
 import net.skebob.network.UpdatePedestalFloatPayload;
 import net.skebob.network.UpdatePedestalVec3dPayload;
 import net.skebob.screen.widget.NumericInputWidget;
@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
     public static final Identifier GUI_TEXTURE =
-            Identifier.of(Skebob.MOD_ID, "textures/gui/pedestal/pedestal_gui.png");
+            Identifier.of(OrbitPedestals.MOD_ID, "textures/gui/pedestal/pedestal_gui.png");
 
     private Vec3d currentOffset;
     private Vec3d currentRotation;

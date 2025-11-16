@@ -2,7 +2,6 @@ package net.skebob;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.skebob.block.entity.ModBlockEntities;
@@ -13,7 +12,7 @@ import net.skebob.entity.ModModelLayers;
 import net.skebob.screen.ModScreenHandlers;
 import net.skebob.screen.custom.PedestalScreen;
 
-public class SkebobClient implements ClientModInitializer {
+public class OrbitPedestalsClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.

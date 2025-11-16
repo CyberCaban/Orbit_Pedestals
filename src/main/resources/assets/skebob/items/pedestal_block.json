@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "skebob:block/pedestal_block"
+    "model": "orbit_pedestals:block/pedestal_block"
   }
 }

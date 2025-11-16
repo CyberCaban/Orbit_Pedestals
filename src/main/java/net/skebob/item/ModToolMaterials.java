@@ -1,6 +1,5 @@
 package net.skebob.item;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.tag.BlockTags;
 import net.skebob.util.ModTags;
@@ -13,7 +12,7 @@ public class ModToolMaterials{
             10,
             10,
             22,
-            ModTags.Items.SKEBOB_ITEMS
+            ModTags.Items.ORBIT_PEDESTALS_ITEMS
     );
 
 

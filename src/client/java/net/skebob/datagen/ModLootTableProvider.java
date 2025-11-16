@@ -19,25 +19,25 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        addDrop(ModBlocks.SKEBOB_BLOCK);
-        addDrop(ModBlocks.GOD_SKEBOB);
-        addDrop(ModBlocks.SKEBOB_SMART_BLOCK,
-                LootTable.builder()
-                        .pool(
-                            LootPool.builder()
-                                .rolls(new UniformLootNumberProvider(
-                                        new ConstantLootNumberProvider(0),
-                                        new ConstantLootNumberProvider(1)))
-                                .with(ItemEntry.builder(ModBlocks.SKEBOB_BLOCK))
-                        )
-                        .pool(
-                        LootPool.builder()
-                                .rolls(new UniformLootNumberProvider(
-                                        new ConstantLootNumberProvider(0),
-                                        new ConstantLootNumberProvider(1)))
-                                .with(ItemEntry.builder(ModBlocks.SKEBOB_BLOCK))
-                        )
-        );
+//        addDrop(ModBlocks.SKEBOB_BLOCK);
+//        addDrop(ModBlocks.GOD_SKEBOB);
+//        addDrop(ModBlocks.SKEBOB_SMART_BLOCK,
+//                LootTable.builder()
+//                        .pool(
+//                            LootPool.builder()
+//                                .rolls(new UniformLootNumberProvider(
+//                                        new ConstantLootNumberProvider(0),
+//                                        new ConstantLootNumberProvider(1)))
+//                                .with(ItemEntry.builder(ModBlocks.SKEBOB_BLOCK))
+//                        )
+//                        .pool(
+//                        LootPool.builder()
+//                                .rolls(new UniformLootNumberProvider(
+//                                        new ConstantLootNumberProvider(0),
+//                                        new ConstantLootNumberProvider(1)))
+//                                .with(ItemEntry.builder(ModBlocks.SKEBOB_BLOCK))
+//                        )
+//        );
         addDrop(ModBlocks.PEDESTAL_BLOCK);
     }
 }

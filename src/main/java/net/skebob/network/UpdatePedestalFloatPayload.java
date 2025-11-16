@@ -6,7 +6,7 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.skebob.Skebob;
+import net.skebob.OrbitPedestals;
 
 public record UpdatePedestalFloatPayload(
         BlockPos pos,
@@ -15,7 +15,7 @@ public record UpdatePedestalFloatPayload(
 ) implements CustomPayload {
 
     public static final CustomPayload.Id<UpdatePedestalFloatPayload> ID =
-            new CustomPayload.Id<>(Identifier.of(Skebob.MOD_ID, "update_pedestal_float"));
+            new CustomPayload.Id<>(Identifier.of(OrbitPedestals.MOD_ID, "update_pedestal_float"));
 
     public static final PacketCodec<RegistryByteBuf, UpdatePedestalFloatPayload> CODEC =
             PacketCodec.tuple(

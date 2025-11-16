@@ -5,11 +5,11 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.util.Identifier;
-import net.skebob.Skebob;
+import net.skebob.OrbitPedestals;
 
 public class GlintstoneProjectileModel extends EntityModel<EntityRenderState> {
 	public static final EntityModelLayer GLINTSTONE_ENTITY = new EntityModelLayer(
-			Identifier.of(Skebob.MOD_ID, "glintstone_projectile"), "main");
+			Identifier.of(OrbitPedestals.MOD_ID, "glintstone_projectile"), "main");
 
 	private final ModelPart glintstone;
 	public GlintstoneProjectileModel(ModelPart root) {

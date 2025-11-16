@@ -12,7 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
-import net.skebob.Skebob;
+import net.skebob.OrbitPedestals;
 
 public class GlintstoneRenderer extends EntityRenderer<GlintstoneProjectileEntity, GlintstoneRenderState> {
     protected GlintstoneProjectileModel model;
@@ -36,7 +36,7 @@ public class GlintstoneRenderer extends EntityRenderer<GlintstoneProjectileEntit
 
         matrices.translate(0.0, -1.5, 0.0);
         VertexConsumer vertexConsumer = ItemRenderer.getItemGlintConsumer(
-                vertexConsumers, this.model.getLayer(Identifier.of(Skebob.MOD_ID, "textures/entity/glintstone_entity/glintstone_entity.png")),
+                vertexConsumers, this.model.getLayer(Identifier.of(OrbitPedestals.MOD_ID, "textures/entity/glintstone_entity/glintstone_entity.png")),
                 false, false
         );
         this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV);

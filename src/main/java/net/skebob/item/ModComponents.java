@@ -1,18 +1,17 @@
 package net.skebob.item;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.component.Component;
 import net.minecraft.component.ComponentType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.skebob.Skebob;
+import net.skebob.OrbitPedestals;
 
 public class ModComponents {
   public static final ComponentType<?> AOW_INFUSABLE = Registry.register(
       Registries.DATA_COMPONENT_TYPE,
-      Identifier.of(Skebob.MOD_ID, "aow_infusable"),
+      Identifier.of(OrbitPedestals.MOD_ID, "aow_infusable"),
       ComponentType.<String>builder().codec(Codec.STRING).build());
   public static boolean isAowInfusable(ItemStack itemStack) {
     return itemStack.contains(AOW_INFUSABLE);
@@ -20,7 +19,7 @@ public class ModComponents {
 
   public static final ComponentType<?> AOW_ACTIVATION_TIME = Registry.register(
       Registries.DATA_COMPONENT_TYPE,
-      Identifier.of(Skebob.MOD_ID, "aow_activation_time"),
+      Identifier.of(OrbitPedestals.MOD_ID, "aow_activation_time"),
       ComponentType.<Integer>builder().codec(Codec.INT).build());
   public static boolean hasActivationTime(ItemStack itemStack) {
     return itemStack.contains(AOW_ACTIVATION_TIME);
@@ -28,7 +27,7 @@ public class ModComponents {
 
   public static final ComponentType<?> AOW_IS_ACTIVATING = Registry.register(
       Registries.DATA_COMPONENT_TYPE,
-      Identifier.of(Skebob.MOD_ID, "aow_is_activating"),
+      Identifier.of(OrbitPedestals.MOD_ID, "aow_is_activating"),
       ComponentType.<Boolean>builder().codec(Codec.BOOL).build());
   public static boolean isActivating(ItemStack itemStack) {
     return itemStack.contains(AOW_IS_ACTIVATING);
@@ -44,6 +43,6 @@ public class ModComponents {
   }
 
   public static void registerModComponents() {
-    Skebob.LOGGER.info("Registering ModComponents for: " + Skebob.MOD_ID);
+    OrbitPedestals.LOGGER.info("Registering ModComponents for: " + OrbitPedestals.MOD_ID);
   }
 }

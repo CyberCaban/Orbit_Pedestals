@@ -7,7 +7,7 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.skebob.Skebob;
+import net.skebob.OrbitPedestals;
 
 public record UpdatePedestalVec3dPayload(
         BlockPos pos,
@@ -18,7 +18,7 @@ public record UpdatePedestalVec3dPayload(
 ) implements CustomPayload {
 
     public static final CustomPayload.Id<UpdatePedestalVec3dPayload> ID =
-            new CustomPayload.Id<>(Identifier.of(Skebob.MOD_ID, "update_pedestal_vec3d"));
+            new CustomPayload.Id<>(Identifier.of(OrbitPedestals.MOD_ID, "update_pedestal_vec3d"));
 
     public static final PacketCodec<RegistryByteBuf, UpdatePedestalVec3dPayload> CODEC =
             PacketCodec.tuple(

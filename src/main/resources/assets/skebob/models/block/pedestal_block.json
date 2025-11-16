@@ -3,8 +3,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "skebob:block/pedestal_block",
-		"particle": "skebob:block/pedestal_block"
+		"0": "orbit_pedestals:block/pedestal_block",
+		"particle": "orbit_pedestals:block/pedestal_block"
 	},
 	"elements": [
 		{

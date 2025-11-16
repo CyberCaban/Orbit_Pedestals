@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import net.skebob.Skebob;
+import net.skebob.OrbitPedestals;
 import net.skebob.entity.GlintstoneProjectileEntity;
 
 public class GlintstoneAshAbility extends AshAbility  {
@@ -18,7 +18,7 @@ public class GlintstoneAshAbility extends AshAbility  {
             GlintstoneProjectileEntity glintstoneProjectile = new GlintstoneProjectileEntity(world, player);
             glintstoneProjectile.setVelocity(player, player.getPitch(), player.getYaw(), 0f, 1.5f, 0f);
             world.spawnEntity(glintstoneProjectile);
-            Skebob.LOGGER.info("Glintstone Ash Ability");
+            OrbitPedestals.LOGGER.info("Glintstone Ash Ability");
         }
     }
 

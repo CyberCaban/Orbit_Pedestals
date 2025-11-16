@@ -17,6 +17,6 @@
 
   "item.skebob.aow.tooltip": "Legendary Ash of War.\nRight click on weapon to apply and right click again to take out.",
 
-  "item.skebob.pedestal_block": "Pedestal",
-  "block.skebob.pedestal_block": "Pedestal"
+  "item.orbit_pedestals.pedestal_block": "Pedestal",
+  "block.orbit_pedestals.pedestal_block": "Pedestal"
 }

@@ -8,15 +8,14 @@ import net.skebob.event.ModEvents;
 import net.skebob.item.ModComponents;
 import net.skebob.item.ModItemGroups;
 import net.skebob.item.ModItems;
-import net.skebob.item.custom.ability.AoWAbilities;
 import net.skebob.network.ModPayloads;
 import net.skebob.screen.ModScreenHandlers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class Skebob implements ModInitializer {
-	public static final String MOD_ID = "skebob";
+public class OrbitPedestals implements ModInitializer {
+	public static final String MOD_ID = "orbit_pedestals";
 
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
@@ -29,7 +28,7 @@ public class Skebob implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		LOGGER.info("Hello Fabric world!");
-		AoWAbilities.registerAbilities();
+//		AoWAbilities.registerAbilities();
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();
 		ModBlocks.registerModBlocks();
