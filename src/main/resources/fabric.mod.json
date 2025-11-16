@@ -12,17 +12,17 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/orbit/icon.png",
+	"icon": "assets/orbit_pedestals/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-          "net.orbit.OrbitPedestals"
+          "net.orbit_pedestals.OrbitPedestals"
 		],
 		"client": [
-			"net.orbit.OrbitPedestalsClient"
+			"net.orbit_pedestals.OrbitPedestalsClient"
 		],
 		"fabric-datagen": [
-			"net.orbit.datagen.OrbitPedestalsDatagen"
+			"net.orbit_pedestals.datagen.OrbitPedestalsDatagen"
 		]
 	},
 	"mixins": [
