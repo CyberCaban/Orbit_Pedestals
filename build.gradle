@@ -28,7 +28,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"skebob" {
+		"orbit_pedestals" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}

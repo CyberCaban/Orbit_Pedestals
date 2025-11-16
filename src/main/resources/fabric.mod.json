@@ -1,8 +1,8 @@
 {
 	"schemaVersion": 1,
-	"id": "skebob",
+	"id": "orbit_pedestals",
 	"version": "${version}",
-	"name": "Skebob",
+	"name": "Orbit Pedestals",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
 		"CyberCaban"
@@ -12,23 +12,23 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/skebob/icon.png",
+	"icon": "assets/orbit/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-          "net.skebob.OrbitPedestals"
+          "net.orbit.OrbitPedestals"
 		],
 		"client": [
-			"net.skebob.OrbitPedestalsClient"
+			"net.orbit.OrbitPedestalsClient"
 		],
 		"fabric-datagen": [
-			"net.skebob.datagen.OrbitPedestalsDatagen"
+			"net.orbit.datagen.OrbitPedestalsDatagen"
 		]
 	},
 	"mixins": [
-		"skebob.mixins.json",
+		"orbit.mixins.json",
 		{
-			"config": "skebob.client.mixins.json",
+			"config": "orbit.client.mixins.json",
 			"environment": "client"
 		}
 	],
