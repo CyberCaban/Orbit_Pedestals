@@ -1,22 +1,24 @@
-# Ash of War Mod
+# Orbit Pedestals
+This mod adds customizable display blocks perfect for showcasing your favorite items in style.
 
-Мод для Minecraft Fabric 1.21.8, добавляющий систему Пепел Войны из Elden Ring.
+Multi items display:
 
-## Особенности
+![image](https://media.forgecdn.net/attachments/description/null/description_97c31f16-a948-4072-a61c-92eeae2ba59a.gif)
 
-- **Слоты для Пепла**: У мечей появился специальный слот для установки Пепел Войны
-- **Спецспособности**: На ПКМ активируется уникальная способность выбранного Пепла
+Single item display:
 
-## Реализованные способности
-- [x] Выпуск заряда ветра
-- [x] Выпуск стрелы
-- [ ] [Землетряс](https://eldenring.fandom.com/ru/wiki/%D0%9F%D0%B5%D0%BF%D0%B5%D0%BB_%D0%92%D0%BE%D0%B9%D0%BD%D1%8B:_%D0%97%D0%B5%D0%BC%D0%BB%D0%B5%D1%82%D1%80%D1%8F%D1%81) (Удар по земле мечем) 
-- [ ] [Снаряды блестящих камней](https://eldenring.fandom.com/ru/wiki/%D0%9F%D0%B5%D0%BF%D0%B5%D0%BB_%D0%92%D0%BE%D0%B9%D0%BD%D1%8B:_%D0%A1%D0%BD%D0%B0%D1%80%D1%8F%D0%B4%D1%8B_%D0%B1%D0%BB%D0%B5%D1%81%D1%82%D1%8F%D1%89%D0%B8%D1%85_%D0%BA%D0%B0%D0%BC%D0%BD%D0%B5%D0%B9)
-- [ ] [Решимость рыцаря](https://eldenring.fandom.com/ru/wiki/%D0%9F%D0%B5%D0%BF%D0%B5%D0%BB_%D0%92%D0%BE%D0%B9%D0%BD%D1%8B:_%D0%A0%D0%B5%D1%88%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C_%D1%80%D1%8B%D1%86%D0%B0%D1%80%D1%8F)
+![image](https://media.forgecdn.net/attachments/description/null/description_ef4e0982-c386-44ea-a959-39ddc2bac0f9.png)
 
+Pedestal GUI:
+
+![image](https://media.forgecdn.net/attachments/description/null/description_4068feab-eaf6-45c8-8e9b-9a3a654d386b.png)
 
 
-# Пьедесталы
+Key Features:
+- Display multiple items on a single pedestal with circular arrangement
+- Fully configurable GUI for adjusting item position, rotation, and scale
+- Customizable levitation effects and animation speed
+- Support for single and multi-item display modes
+- Perfect for building shops, museums, or decorative displays
 
-- яйца мобов на пьедестале превращаются в модельки мобов
-- анимация
+Configure every aspect of your display through an easy-to-use interface - adjust rotation speed, offset, item scale, and coordinate positions to create the perfect presentation for your items!
