@@ -15,12 +15,5 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-
-//        valueLookupBuilder(ItemTags.SWORDS).add(ModItems.GOD_SKEBOB_SWORD);
-//        valueLookupBuilder(ItemTags.AXES).add(ModItems.GOD_SKEBOB_AXE);
-//        valueLookupBuilder(ItemTags.SHOVELS).add(ModItems.GOD_SKEBOB_SHOVEL);
-//        valueLookupBuilder(ItemTags.PICKAXES).add(ModItems.GOD_SKEBOB_PICKAXE);
-//        valueLookupBuilder(ItemTags.HOES).add(ModItems.GOD_SKEBOB_HOE);
-
     }
 }

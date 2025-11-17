@@ -47,38 +47,6 @@ public class ModBlocks {
     private static RegistryKey<Item> keyOfItem(String name) {
         return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(OrbitPedestals.MOD_ID, name));
     }
-//    public static final Block SKEBOB_BLOCK = register("skebob_block",
-//            Block::new,
-//            AbstractBlock.Settings.create()
-//                    .strength(20000f)
-//                    .hardness(0.9999f)
-//                    .requiresTool()
-//                    .sounds(BlockSoundGroup.METAL)
-//            ,
-//            true
-//            );
-//    public static final Block GOD_SKEBOB = register("god_skebob_block",
-//            GodSkebobBlock::new,
-//            AbstractBlock.Settings.create()
-//                    .strength(1f)
-//                    .hardness(1f)
-//                    .requiresTool()
-//                    .sounds(BlockSoundGroup.ANVIL)
-//            ,
-//                true
-//    );
-//
-//    public static final Block SKEBOB_SMART_BLOCK = register("skebob_smart_block",
-//            SmartSkebobBlock::new,
-//            AbstractBlock.Settings.create()
-//                    .strength(1f)
-//                    .hardness(1f)
-//                    .requiresTool()
-//                    .luminance(value -> value.get(SmartSkebobBlock.CLICKED) ? 15 : 0)
-//                    .sounds(BlockSoundGroup.HONEY)
-//            ,
-//            true
-//    );
 
     public static final Block PEDESTAL_BLOCK = register("pedestal_block", PedestalBlock::new,
             AbstractBlock.Settings.create()

@@ -3,8 +3,7 @@
   "package": "net.orbit.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ExampleMixin",
-    "HandledScreenMixin"
+    "ExampleMixin"
   ],
   "injectors": {
     "defaultRequire": 1
