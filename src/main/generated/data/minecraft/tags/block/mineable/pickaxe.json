@@ -1,8 +1,5 @@
 {
   "values": [
-    "skebob:skebob_block",
-    "skebob:skebob_smart_block",
-    "skebob:god_skebob_block",
-    "skebob:pedestal_block"
+    "orbit_pedestals:pedestal_block"
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "l": "minecraft:smooth_stone_slab",
+    "s": "minecraft:smooth_stone"
+  },
+  "pattern": [
+    "lll",
+    " s ",
+    "sss"
+  ],
+  "result": {
+    "count": 1,
+    "id": "orbit_pedestals:pedestal_block"
+  }
+}
