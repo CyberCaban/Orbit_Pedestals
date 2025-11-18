@@ -13,7 +13,7 @@ import net.orbit.OrbitPedestals;
 public class ModEntities {
     public static <T extends Entity>EntityType<T> registerEntity(String id, EntityType.Builder<T> type) {
         RegistryKey<EntityType<?>> registryKey = RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(OrbitPedestals.MOD_ID, id));
-        return Registry.register(Registries.ENTITY_TYPE, registryKey, type.build(registryKey));
+        return Registry.register(Registries.ENTITY_TYPE, registryKey, type.build(id));
     }
 
     public static void registerEntities() {

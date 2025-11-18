@@ -16,7 +16,7 @@ public class ModItems {
         RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(OrbitPedestals.MOD_ID, name));
 
         // Create the item instance.
-        Item item = itemFactory.apply(settings.registryKey(itemKey));
+        Item item = itemFactory.apply(settings);
 
         // Register the item.
         Registry.register(Registries.ITEM, itemKey, item);

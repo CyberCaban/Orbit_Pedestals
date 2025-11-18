@@ -12,6 +12,5 @@ public class OrbitPedestalsDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(ModItemTagProvider::new);
         pack.addProvider(ModRecipeProvider::new);
         pack.addProvider(ModLootTableProvider::new);
-        pack.addProvider(ModModelProvider::new);
     }
 }

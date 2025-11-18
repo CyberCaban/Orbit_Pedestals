@@ -16,8 +16,6 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
@@ -137,72 +135,66 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        super.writeData(view);
-        Inventories.writeData(view, inventory);
-        writeRenderConfigToNbt(view);
-        view.putFloat("rotation", rotation);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
+        Inventories.writeNbt(nbt, inventory, registryLookup);
+        writeRenderConfigToNbt(nbt);
+        nbt.putFloat("rotation", rotation);
     }
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
-        Inventories.readData(view, inventory);
-        this.renderConfig = readRenderConfigFromNbt(view);
-        this.rotation = view.getFloat("rotation", 0f);
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
+        Inventories.readNbt(nbt, inventory, registryLookup);
+        this.renderConfig = readRenderConfigFromNbt(nbt);
+        this.rotation = nbt.getFloat("rotation");
     }
 
-    private void writeRenderConfigToNbt(WriteView view) {
-        view.putFloat("cfg_rotationSpeed", renderConfig.rotationSpeed());
-        view.putFloat("cfg_baseHeight", renderConfig.baseHeight());
-        view.putFloat("cfg_itemScale", renderConfig.itemScale());
-        view.putFloat("cfg_levitationAmplitude", renderConfig.levitationAmplitude());
-        view.putFloat("cfg_levitationSpeed", renderConfig.levitationSpeed());
-        view.putFloat("cfg_radius", renderConfig.radius());
-        view.putFloat("cfg_multiItemLevitationAmplitude", renderConfig.multiItemLevitationAmplitude());
-        view.putFloat("cfg_crystalScale", renderConfig.crystalScale());
-        view.putBoolean("cfg_crystalShowBottom", renderConfig.crystalShowBottom());
+    private void writeRenderConfigToNbt(NbtCompound nbt) {
+        nbt.putFloat("cfg_rotationSpeed", renderConfig.rotationSpeed());
+        nbt.putFloat("cfg_baseHeight", renderConfig.baseHeight());
+        nbt.putFloat("cfg_itemScale", renderConfig.itemScale());
+        nbt.putFloat("cfg_levitationAmplitude", renderConfig.levitationAmplitude());
+        nbt.putFloat("cfg_levitationSpeed", renderConfig.levitationSpeed());
+        nbt.putFloat("cfg_radius", renderConfig.radius());
+        nbt.putFloat("cfg_multiItemLevitationAmplitude", renderConfig.multiItemLevitationAmplitude());
+        nbt.putFloat("cfg_crystalScale", renderConfig.crystalScale());
+        nbt.putBoolean("cfg_crystalShowBottom", renderConfig.crystalShowBottom());
 
-        writeVec3dToNbt(view, "cfg_offset", renderConfig.itemOffset());
-        writeVec3dToNbt(view, "cfg_rotation", renderConfig.itemRotation());
-        writeVec3dToNbt(view, "cfg_rotStep", renderConfig.rotationStep());
+        writeVec3dToNbt(nbt, "cfg_offset", renderConfig.itemOffset());
+        writeVec3dToNbt(nbt, "cfg_rotation", renderConfig.itemRotation());
+        writeVec3dToNbt(nbt, "cfg_rotStep", renderConfig.rotationStep());
     }
 
-    private PedestalRenderConfig readRenderConfigFromNbt(ReadView view) {
+    private PedestalRenderConfig readRenderConfigFromNbt(NbtCompound nbt) {
         return new PedestalRenderConfig.Builder()
-                .rotationSpeed(view.getFloat("cfg_rotationSpeed", PedestalRenderConfig.DEFAULT_ROTATION_SPEED))
-                .baseHeight(view.getFloat("cfg_baseHeight", PedestalRenderConfig.DEFAULT_BASE_HEIGHT))
-                .singleItemScale(view.getFloat("cfg_itemScale", PedestalRenderConfig.DEFAULT_SINGLE_ITEM_SCALE))
-                .levitationAmplitude(view.getFloat("cfg_levitationAmplitude", PedestalRenderConfig.DEFAULT_LEVITATION_AMPLITUDE))
-                .levitationSpeed(view.getFloat("cfg_levitationSpeed", PedestalRenderConfig.DEFAULT_LEVITATION_SPEED))
-                .radius(view.getFloat("cfg_radius", PedestalRenderConfig.DEFAULT_RADIUS))
-                .multiItemLevitationAmplitude(view.getFloat("cfg_multiItemLevitationAmplitude", PedestalRenderConfig.DEFAULT_MULTI_ITEM_LEVITATION_AMPLITUDE))
-                .crystalScale(view.getFloat("cfg_crystalScale", PedestalRenderConfig.DEFAULT_CRYSTAL_SCALE))
-                .crystalShowBottom(view.getBoolean("cfg_crystalShowBottom", PedestalRenderConfig.DEFAULT_CRYSTAL_SHOW_BOTTOM))
-                .singleItemOffset(readVec3dFromNbt(view, "cfg_offset", PedestalRenderConfig.DEFAULT_SINGLE_ITEM_OFFSET))
-                .itemRotation(readVec3dFromNbt(view, "cfg_rotation", PedestalRenderConfig.DEFAULT_SINGLE_ITEM_ROTATION))
-                .rotationStep(readVec3dFromNbt(view, "cfg_rotStep", PedestalRenderConfig.DEFAULT_ROTATION_STEP))
+                .rotationSpeed(nbt.getFloat("cfg_rotationSpeed"))
+                .baseHeight(nbt.getFloat("cfg_baseHeight"))
+                .singleItemScale(nbt.getFloat("cfg_itemScale"))
+                .levitationAmplitude(nbt.getFloat("cfg_levitationAmplitude"))
+                .levitationSpeed(nbt.getFloat("cfg_levitationSpeed"))
+                .radius(nbt.getFloat("cfg_radius"))
+                .multiItemLevitationAmplitude(nbt.getFloat("cfg_multiItemLevitationAmplitude"))
+                .crystalScale(nbt.getFloat("cfg_crystalScale"))
+                .crystalShowBottom(nbt.getBoolean("cfg_crystalShowBottom"))
+                .singleItemOffset(readVec3dFromNbt(nbt, "cfg_offset"))
+                .itemRotation(readVec3dFromNbt(nbt, "cfg_rotation"))
+                .rotationStep(readVec3dFromNbt(nbt, "cfg_rotStep"))
                 .build();
     }
 
-    private void writeVec3dToNbt(WriteView view, String prefix, Vec3d vec) {
-        view.putDouble(prefix + "X", vec.x);
-        view.putDouble(prefix + "Y", vec.y);
-        view.putDouble(prefix + "Z", vec.z);
+    private void writeVec3dToNbt(NbtCompound nbt, String prefix, Vec3d vec) {
+        nbt.putDouble(prefix + "X", vec.x);
+        nbt.putDouble(prefix + "Y", vec.y);
+        nbt.putDouble(prefix + "Z", vec.z);
     }
 
-    private Vec3d readVec3dFromNbt(ReadView view, String prefix, Vec3d defaultValue) {
+    private Vec3d readVec3dFromNbt(NbtCompound nbt, String prefix) {
         return new Vec3d(
-                view.getDouble(prefix + "X", defaultValue.x),
-                view.getDouble(prefix + "Y", defaultValue.y),
-                view.getDouble(prefix + "Z", defaultValue.z)
+                nbt.getDouble(prefix + "X"),
+                nbt.getDouble(prefix + "Y"),
+                nbt.getDouble(prefix + "Z")
         );
-    }
-
-    @Override
-    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-        ItemScatterer.spawn(world, pos, this);
-        super.onBlockReplaced(pos, oldState);
     }
 
     @Override
@@ -236,11 +228,6 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
         if (this.world != null) {
             this.world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
         }
-    }
-
-    protected void onViewerCountUpdate(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
-        Block block = state.getBlock();
-        world.addSyncedBlockEvent(pos, block, 1, newViewerCount);
     }
 
     @Override

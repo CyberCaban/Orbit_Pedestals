@@ -1,20 +1,16 @@
 package net.orbit.block.entity.renderer;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.LightmapTextureManager;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.render.*;
+import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.decoration.EndCrystalEntity;
-import net.minecraft.item.ItemDisplayContext;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RotationAxis;
@@ -28,11 +24,15 @@ import static java.lang.Math.*;
 
 public class PedestalBlockEntityRenderer implements BlockEntityRenderer<PedestalBlockEntity> {
     private final EntityRenderDispatcher entityRenderDispatcher;
+    private final BlockRenderManager blockRenderManager;
+    private final ItemRenderer itemRenderer;
     private PedestalRenderConfig renderConfig;
 
     public PedestalBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
         this.entityRenderDispatcher = ctx.getEntityRenderDispatcher();
         this.renderConfig = PedestalRenderConfig.defaultMultiItem(); // Default config
+        this.blockRenderManager = ctx.getRenderManager();
+        this.itemRenderer = ctx.getItemRenderer();
     }
 
     public void setRenderConfig(PedestalRenderConfig config) {
@@ -45,27 +45,7 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
         return LightmapTextureManager.pack(bLight, sLight);
     }
 
-    private void renderEndCrystalEntity(PedestalBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        float scale = renderConfig.crystalScale();
-        matrices.scale(scale, scale, scale);
-
-        EndCrystalEntity crystal = EntityType.END_CRYSTAL.create(entity.getWorld(), SpawnReason.COMMAND);
-        if(crystal != null && entity.getWorld() != null) {
-            crystal.setShowBottom(renderConfig.crystalShowBottom());
-            crystal.age = (int) entity.getRenderingRotation();
-            crystal.speed = 0.0f;
-        }
-
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(0));
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(0));
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(0));
-
-        entityRenderDispatcher.render(crystal, 0, 0, 0, 0, matrices, vertexConsumers, light);
-    }
-
     private void renderSingleItem(ItemStack item, PedestalBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-
         matrices.push();
 
         Vec3d offset = renderConfig.itemOffset();
@@ -81,20 +61,25 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((float) rotation.z));
 
         float scale = renderConfig.itemScale();
-        matrices.scale(-scale, scale, -scale);
+        matrices.scale(scale, scale, scale);
 
-        if (item.isOf(Items.END_CRYSTAL)) {
-            renderEndCrystalEntity(entity, matrices, vertexConsumers, light);
-        } else {
-            itemRenderer.renderItem(item, ItemDisplayContext.GUI, light,
-                    OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 1);
-        }
+        renderItemOrBlock(item, matrices, entity, vertexConsumers, light);
 
         matrices.pop();
     }
 
+    private void renderItemOrBlock(ItemStack item, MatrixStack matrices, PedestalBlockEntity entity, VertexConsumerProvider vertexConsumers, int light) {
+        if (!(item.getItem() instanceof BlockItem blockItem)) {
+            itemRenderer.renderItem(item, ModelTransformationMode.GUI, light,
+                    OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 1);
+        } else {
+            matrices.translate(-0.5, -0.5, -0.5);
+            BlockState blockState = blockItem.getBlock().getDefaultState();
+            blockRenderManager.renderBlockAsEntity(blockState, matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV);
+        }
+    }
+
     private void renderMultiItems(DefaultedList<ItemStack> items, PedestalBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
         float radius = renderConfig.radius();
 
         for (int i = 0; i < items.size(); i++) {
@@ -114,19 +99,13 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
                     * renderConfig.levitationAmplitude();
             matrices.translate(0, levitation, 0);
 
-            if (items.get(i).isOf(Items.END_CRYSTAL)) {
-                renderEndCrystalEntity(entity, matrices, vertexConsumers, light);
-            } else {
-                float scale = renderConfig.itemScale();
-                matrices.scale(-scale, scale, -scale);
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getRenderingRotation() + (i * 360f / items.size())));
-                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45f * x * z));
+            float scale = renderConfig.itemScale();
+            matrices.scale(scale, scale, scale);
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getRenderingRotation() + (i * 360f / items.size())));
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45f * x * z));
 
-                if (entity.getWorld() != null) {
-                    itemRenderer.renderItem(items.get(i), ItemDisplayContext.GUI,
-                            getLightLevel(entity.getWorld(), entity.getPos()), OverlayTexture.DEFAULT_UV,
-                            matrices, vertexConsumers, entity.getWorld(), 1);
-                }
+            if (entity.getWorld() != null) {
+                renderItemOrBlock(items.get(i), matrices, entity, vertexConsumers, light);
             }
 
             matrices.pop();
@@ -134,7 +113,7 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
     }
 
     @Override
-    public void render(PedestalBlockEntity entity, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
+    public void render(PedestalBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         setRenderConfig(entity.getRenderConfig());
         DefaultedList<ItemStack> items = entity.getNonNullItems();
 
