@@ -9,6 +9,7 @@ public class ModPayloads {
     public static void registerPayloads() {
         PayloadTypeRegistry.playC2S().register(UpdatePedestalFloatPayload.ID, UpdatePedestalFloatPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(UpdatePedestalVec3dPayload.ID, UpdatePedestalVec3dPayload.CODEC);
+        PayloadTypeRegistry.playC2S().register(UpdatePedestalBooleanPayload.ID, UpdatePedestalBooleanPayload.CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(UpdatePedestalFloatPayload.ID,
                 (updatePedestalFloatPayload, context) ->
@@ -34,6 +35,24 @@ public class ModPayloads {
                             pedestal.updateConfigField(
                                     payload.fieldName(),
                                     payload.getVec3d()
+                            );
+                        }
+                    });
+                }
+        );
+
+        ServerPlayNetworking.registerGlobalReceiver(
+                UpdatePedestalBooleanPayload.ID,
+                (payload, context) -> {
+                    context.server().execute(() -> {
+                        BlockEntity be = context.player()
+                                .getWorld()
+                                .getBlockEntity(payload.pos());
+
+                        if (be instanceof PedestalBlockEntity pedestal) {
+                            pedestal.updateConfigField(
+                                    payload.fieldName(),
+                                    payload.value()
                             );
                         }
                     });
