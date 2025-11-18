@@ -2,6 +2,7 @@ package net.orbit.screen.widget;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -73,7 +74,14 @@ public class NumericInputWidget extends ClickableWidget {
     }
 
     private void adjustValue(float delta) {
-        this.value = Math.max(minValue, Math.min(maxValue, value + delta));
+        float modifiedDelta = delta;
+        if (Screen.hasShiftDown()) {
+                modifiedDelta = delta * 10;
+                if (Screen.hasControlDown()) {
+                    modifiedDelta = modifiedDelta * 2;
+                }
+        }
+        this.value = Math.max(minValue, Math.min(maxValue, value + modifiedDelta));
         textField.setText(String.format("%.2f", value));
         onChange.accept(value);
     }

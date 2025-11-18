@@ -3,12 +3,14 @@ package net.orbit.screen.custom;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextWidget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.orbit.OrbitPedestals;
+import net.orbit.network.UpdatePedestalBooleanPayload;
 import net.orbit.network.UpdatePedestalFloatPayload;
 import net.orbit.network.UpdatePedestalVec3dPayload;
 import net.orbit.screen.widget.NumericInputWidget;
@@ -54,20 +56,14 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
 
         addDrawableChild(new NumericInputWidget(
                 startX, currentY, width, height,
-                Text.literal("Base Height"),
-                this.handler.getRenderConfig().baseHeight(),
-                -5f, 5f, 0.1f,
-                value -> sendConfigUpdate("baseHeight", value)
-        ));
-        currentY += spacingY;
-
-        addDrawableChild(new NumericInputWidget(
-                startX, currentY, width, height,
                 Text.literal("Item Scale"),
                 this.handler.getRenderConfig().itemScale(),
                 0.1f, 3f, 0.1f,
                 value -> sendConfigUpdate("singleItemScale", value)
         ));
+        currentY += spacingY;
+
+        // empty space for leveling vec3 input
         currentY += spacingY;
 
         // Offset Vec3d
@@ -84,6 +80,14 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
                 }
         );
 
+        addDrawableChild(ButtonWidget.builder(
+                                Text.of("Force render item toggle"),
+                                action -> sendConfigUpdate("forceRenderItem", !this.handler.getRenderConfig().forceRenderItem())
+                        ).dimensions(startX, currentY, width, height)
+                        .build()
+        );
+        currentY += spacingY;
+
         // 2nd column
         currentY = startY;
         int column2X = startX + spacingX + width;
@@ -92,7 +96,7 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
                 column2X, currentY, width, height,
                 Text.literal("Levitation Speed"),
                 handler.getRenderConfig().levitationSpeed(),
-                0f, 10f, 0.5f,
+                0f, 10f, 0.1f,
                 value -> sendConfigUpdate("levitationSpeed", value)
         ));
         currentY += spacingY;
@@ -120,7 +124,7 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
                 column2X, currentY, width, height, spacingY,
                 "Rotation",
                 currentRotation,
-                -180f, 180f, 5f,
+                -180f, 180f, 1f,
                 "itemRotation",
                 () -> currentRotation,
                 newVec -> {
@@ -128,6 +132,14 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
                     sendConfigUpdate("itemRotation", newVec);
                 }
         );
+
+        addDrawableChild(ButtonWidget.builder(
+                                Text.of("Multi item fancy rotation toggle"),
+                                action -> sendConfigUpdate("multiItemFancyRotation", !this.handler.getRenderConfig().multiItemFancyRotation())
+                        ).dimensions(column2X, currentY, width, height)
+                        .build()
+        );
+        currentY += spacingY;
     }
 
     private int addVec3dFields(int x, int y, int width, int height, int spacing,
@@ -194,6 +206,12 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
 
     private void sendConfigUpdate(String fieldName, Vec3d value) {
         ClientPlayNetworking.send(new UpdatePedestalVec3dPayload(
+                handler.getBlockPos(), fieldName, value
+        ));
+    }
+
+    private void sendConfigUpdate(String fieldName, boolean value) {
+        ClientPlayNetworking.send(new UpdatePedestalBooleanPayload(
                 handler.getBlockPos(), fieldName, value
         ));
     }

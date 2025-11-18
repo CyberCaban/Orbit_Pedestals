@@ -1,7 +1,9 @@
 package net.orbit.block.entity.renderer;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.LightmapTextureManager;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -69,7 +71,7 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
     }
 
     private void renderItemOrBlock(ItemStack item, MatrixStack matrices, PedestalBlockEntity entity, VertexConsumerProvider vertexConsumers, int light) {
-        if (!(item.getItem() instanceof BlockItem blockItem)) {
+        if (!(item.getItem() instanceof BlockItem blockItem) || renderConfig.forceRenderItem()) {
             itemRenderer.renderItem(item, ModelTransformationMode.GUI, light,
                     OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 1);
         } else {
@@ -82,18 +84,23 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
     private void renderMultiItems(DefaultedList<ItemStack> items, PedestalBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         float radius = renderConfig.radius();
 
+        matrices.push();
+        Vec3d offset = renderConfig.itemOffset();
+        matrices.translate(offset.x, offset.y, offset.z);
+        Vec3d rotation = renderConfig.itemRotation();
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees((float) rotation.x));
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((float) rotation.y));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((float) rotation.z));
         for (int i = 0; i < items.size(); i++) {
             matrices.push();
 
             float angle = (float) (2 * PI * i / items.size()) + entity.getRenderingRotation();
             float x = (float) cos(angle) * radius;
             float z = (float) sin(angle) * radius;
-
-            Vec3d offset = renderConfig.itemOffset();
             float delta = renderConfig.multiItemLevitationAmplitude();
             float fx = (float) (x * cos(angle) + z * sin(angle));
             float fz = (float) (z * cos(angle) - x * sin(angle));
-            matrices.translate((offset.x + x), offset.y + (fx*fz*delta), (offset.z + z));
+            matrices.translate((x), (fx*fz*delta), (z));
 
             float levitation = (float) sin(angle * renderConfig.levitationSpeed())
                     * renderConfig.levitationAmplitude();
@@ -101,15 +108,17 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
 
             float scale = renderConfig.itemScale();
             matrices.scale(scale, scale, scale);
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getRenderingRotation() + (i * 360f / items.size())));
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45f * x * z));
-
-            if (entity.getWorld() != null) {
-                renderItemOrBlock(items.get(i), matrices, entity, vertexConsumers, light);
+            if (renderConfig.multiItemFancyRotation()){
+    //            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(entity.getRenderingRotation()));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getRenderingRotation() + (i * 360f / items.size())));
+                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45f * x * z));
             }
+
+            renderItemOrBlock(items.get(i), matrices, entity, vertexConsumers, light);
 
             matrices.pop();
         }
+        matrices.pop();
     }
 
     @Override

@@ -17,12 +17,10 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import net.orbit.block.entity.ImplementedInventory;
 import net.orbit.block.entity.ModBlockEntities;
 import net.orbit.screen.custom.PedestalScreenHandler;
@@ -60,7 +58,7 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     public void pop() {
-        for (int i = inventory.size()-1; i >= 0; i--) {
+        for (int i = inventory.size() - 1; i >= 0; i--) {
             if (!inventory.get(i).isEmpty()) {
                 inventory.set(i, ItemStack.EMPTY);
                 break;
@@ -106,7 +104,15 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
             case "levitationSpeed" -> builder.levitationSpeed(value);
             case "radius" -> builder.radius(value);
             case "multiItemLevitationAmplitude" -> builder.multiItemLevitationAmplitude(value);
-            case "crystalScale" -> builder.crystalScale(value);
+        }
+        setRenderConfig(builder.build());
+    }
+
+    public void updateConfigField(String fieldName, boolean value) {
+        PedestalRenderConfig.Builder builder = configToBuilder(renderConfig);
+        switch (fieldName) {
+            case "forceRenderItem" -> builder.forceRenderItem(value);
+            case "multiItemFancyRotation" -> builder.multiItemFancyRotation(value);
         }
         setRenderConfig(builder.build());
     }
@@ -158,8 +164,8 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
         nbt.putFloat("cfg_levitationSpeed", renderConfig.levitationSpeed());
         nbt.putFloat("cfg_radius", renderConfig.radius());
         nbt.putFloat("cfg_multiItemLevitationAmplitude", renderConfig.multiItemLevitationAmplitude());
-        nbt.putFloat("cfg_crystalScale", renderConfig.crystalScale());
-        nbt.putBoolean("cfg_crystalShowBottom", renderConfig.crystalShowBottom());
+        nbt.putBoolean("cfg_forceRenderItem", renderConfig.forceRenderItem());
+        nbt.putBoolean("cfg_multiItemFancyRotation", renderConfig.multiItemFancyRotation());
 
         writeVec3dToNbt(nbt, "cfg_offset", renderConfig.itemOffset());
         writeVec3dToNbt(nbt, "cfg_rotation", renderConfig.itemRotation());
@@ -175,11 +181,11 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
                 .levitationSpeed(nbt.getFloat("cfg_levitationSpeed"))
                 .radius(nbt.getFloat("cfg_radius"))
                 .multiItemLevitationAmplitude(nbt.getFloat("cfg_multiItemLevitationAmplitude"))
-                .crystalScale(nbt.getFloat("cfg_crystalScale"))
-                .crystalShowBottom(nbt.getBoolean("cfg_crystalShowBottom"))
                 .singleItemOffset(readVec3dFromNbt(nbt, "cfg_offset"))
                 .itemRotation(readVec3dFromNbt(nbt, "cfg_rotation"))
                 .rotationStep(readVec3dFromNbt(nbt, "cfg_rotStep"))
+                .crystalScale(nbt.getFloat("cfg_forceRenderItem"))
+                .crystalShowBottom(nbt.getBoolean("cfg_multiItemFancyRotation"))
                 .build();
     }
 
