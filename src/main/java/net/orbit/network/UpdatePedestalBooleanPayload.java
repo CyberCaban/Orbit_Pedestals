@@ -21,7 +21,7 @@ public record UpdatePedestalBooleanPayload(
             PacketCodec.tuple(
                     BlockPos.PACKET_CODEC, UpdatePedestalBooleanPayload::pos,
                     PacketCodecs.STRING, UpdatePedestalBooleanPayload::fieldName,
-                    PacketCodecs.BOOLEAN, UpdatePedestalBooleanPayload::value,
+                    PacketCodecs.BOOL, UpdatePedestalBooleanPayload::value,
                     UpdatePedestalBooleanPayload::new
             );
 

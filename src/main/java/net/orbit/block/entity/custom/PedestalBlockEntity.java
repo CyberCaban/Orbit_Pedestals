@@ -184,8 +184,8 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
                 .singleItemOffset(readVec3dFromNbt(nbt, "cfg_offset"))
                 .itemRotation(readVec3dFromNbt(nbt, "cfg_rotation"))
                 .rotationStep(readVec3dFromNbt(nbt, "cfg_rotStep"))
-                .crystalScale(nbt.getFloat("cfg_forceRenderItem"))
-                .crystalShowBottom(nbt.getBoolean("cfg_multiItemFancyRotation"))
+                .multiItemFancyRotation(nbt.getBoolean("cfg_multiItemFancyRotation"))
+                .forceRenderItem(nbt.getBoolean("cfg_forceRenderItem"))
                 .build();
     }
 
