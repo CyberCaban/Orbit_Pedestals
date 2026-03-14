@@ -129,7 +129,7 @@ public class PedestalBlockEntityRenderer implements BlockEntityRenderer<Pedestal
         if (items.isEmpty()) return;
 
         if (items.size() == 1) {
-            renderSingleItem(items.getFirst(), entity, matrices, vertexConsumers, light);
+            renderSingleItem(items.get(0), entity, matrices, vertexConsumers, light);
         } else {
             renderMultiItems(items, entity, matrices, vertexConsumers, light);
         }

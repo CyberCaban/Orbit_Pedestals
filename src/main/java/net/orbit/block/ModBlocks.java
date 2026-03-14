@@ -41,11 +41,11 @@ public class ModBlocks {
     }
 
     private static RegistryKey<Block> keyOfBlock(String name) {
-        return RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(OrbitPedestals.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.BLOCK, new Identifier(OrbitPedestals.MOD_ID, name));
     }
 
     private static RegistryKey<Item> keyOfItem(String name) {
-        return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(OrbitPedestals.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.ITEM, new Identifier(OrbitPedestals.MOD_ID, name));
     }
 
     public static final Block PEDESTAL_BLOCK = register("pedestal_block", PedestalBlock::new,

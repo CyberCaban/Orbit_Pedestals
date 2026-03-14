@@ -1,9 +1,6 @@
 package net.orbit.network;
 
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -15,20 +12,13 @@ public record UpdatePedestalVec3dPayload(
         double x,
         double y,
         double z
-) implements CustomPayload {
+    ) {
 
-    public static final CustomPayload.Id<UpdatePedestalVec3dPayload> ID =
-            new CustomPayload.Id<>(Identifier.of(OrbitPedestals.MOD_ID, "update_pedestal_vec3d"));
+        public static final Identifier ID = new Identifier(OrbitPedestals.MOD_ID, "update_pedestal_vec3d");
 
-    public static final PacketCodec<RegistryByteBuf, UpdatePedestalVec3dPayload> CODEC =
-            PacketCodec.tuple(
-                    BlockPos.PACKET_CODEC, UpdatePedestalVec3dPayload::pos,
-                    PacketCodecs.STRING, UpdatePedestalVec3dPayload::fieldName,
-                    PacketCodecs.DOUBLE, UpdatePedestalVec3dPayload::x,
-                    PacketCodecs.DOUBLE, UpdatePedestalVec3dPayload::y,
-                    PacketCodecs.DOUBLE, UpdatePedestalVec3dPayload::z,
-                    UpdatePedestalVec3dPayload::new
-            );
+        public UpdatePedestalVec3dPayload(PacketByteBuf buf) {
+        this(buf.readBlockPos(), buf.readString(), buf.readDouble(), buf.readDouble(), buf.readDouble());
+        }
 
     public UpdatePedestalVec3dPayload(BlockPos pos, String fieldName, Vec3d vec) {
         this(pos, fieldName, vec.x, vec.y, vec.z);
@@ -38,8 +28,11 @@ public record UpdatePedestalVec3dPayload(
         return new Vec3d(x, y, z);
     }
 
-    @Override
-    public CustomPayload.Id<? extends CustomPayload> getId() {
-        return ID;
+    public void write(PacketByteBuf buf) {
+        buf.writeBlockPos(pos);
+        buf.writeString(fieldName);
+        buf.writeDouble(x);
+        buf.writeDouble(y);
+        buf.writeDouble(z);
     }
 }

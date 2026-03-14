@@ -1,6 +1,5 @@
 package net.orbit.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,7 +8,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -21,10 +19,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlock extends BlockWithEntity implements BlockEntityProvider {
     private static final VoxelShape SHAPE = Block.createCuboidShape(2,0,2,14,13,14);
-    public static final MapCodec<PedestalBlock> CODEC = PedestalBlock.createCodec(PedestalBlock::new);
 
     @Override
-    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
 
@@ -33,22 +30,17 @@ public class PedestalBlock extends BlockWithEntity implements BlockEntityProvide
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
-    }
-
-    @Override
     public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new PedestalBlockEntity(pos, state);
     }
 
     @Override
-    protected BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof PedestalBlockEntity pedestal) {
@@ -60,19 +52,19 @@ public class PedestalBlock extends BlockWithEntity implements BlockEntityProvide
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        return super.onUse(state, world, pos, player, hit);
-    }
-
-    @Override
-    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(!(world.getBlockEntity(pos) instanceof PedestalBlockEntity pedestalBlockEntity)) {
-            return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (world.isClient()) {
+            return ActionResult.SUCCESS;
         }
+
+        if(!(world.getBlockEntity(pos) instanceof PedestalBlockEntity pedestalBlockEntity)) {
+            return ActionResult.PASS;
+        }
+
         ItemStack playerStackInHand = player.getStackInHand(hand);
         if(pedestalBlockEntity.hasRoom() && !playerStackInHand.isEmpty()) {
             pedestalBlockEntity.push(playerStackInHand.copyWithCount(1));
-            world.playSound(player, pos, SoundEvents.BLOCK_VAULT_INSERT_ITEM, SoundCategory.BLOCKS, 1f, 2f);
+            world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.75f, 1.2f);
             playerStackInHand.decrement(1);
 
             world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
@@ -80,15 +72,17 @@ public class PedestalBlock extends BlockWithEntity implements BlockEntityProvide
         } else if(!player.isSneaking()) {
             if (playerStackInHand.isEmpty()) {
                 ItemStack stackOnPedestal = pedestalBlockEntity.peek();
-                player.setStackInHand(Hand.MAIN_HAND, stackOnPedestal);
-                world.playSound(player, pos, SoundEvents.BLOCK_VAULT_EJECT_ITEM, SoundCategory.BLOCKS, 1f, 1f);
-                pedestalBlockEntity.pop();
+                if (!stackOnPedestal.isEmpty()) {
+                    player.setStackInHand(hand, stackOnPedestal);
+                    world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.75f, 1.0f);
+                    pedestalBlockEntity.pop();
 
-                world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
-                pedestalBlockEntity.markDirty();
+                    world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+                    pedestalBlockEntity.markDirty();
+                }
             } else if (playerStackInHand.getItem() == pedestalBlockEntity.peek().getItem()) {
                 playerStackInHand.increment(1);
-                world.playSound(player, pos, SoundEvents.BLOCK_VAULT_EJECT_ITEM, SoundCategory.BLOCKS, 1f, 1f);
+                world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.75f, 1.0f);
                 pedestalBlockEntity.pop();
 
                 world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
@@ -98,6 +92,6 @@ public class PedestalBlock extends BlockWithEntity implements BlockEntityProvide
             player.openHandledScreen(pedestalBlockEntity);
         }
 
-        return ItemActionResult.SUCCESS;
+        return ActionResult.CONSUME;
     }
 }

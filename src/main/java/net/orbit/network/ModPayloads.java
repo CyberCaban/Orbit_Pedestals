@@ -1,41 +1,32 @@
 package net.orbit.network;
 
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.entity.BlockEntity;
 import net.orbit.block.entity.custom.PedestalBlockEntity;
 
 public class ModPayloads {
     public static void registerPayloads() {
-        PayloadTypeRegistry.playC2S().register(UpdatePedestalFloatPayload.ID, UpdatePedestalFloatPayload.CODEC);
-        PayloadTypeRegistry.playC2S().register(UpdatePedestalVec3dPayload.ID, UpdatePedestalVec3dPayload.CODEC);
-        PayloadTypeRegistry.playC2S().register(UpdatePedestalBooleanPayload.ID, UpdatePedestalBooleanPayload.CODEC);
-
         ServerPlayNetworking.registerGlobalReceiver(UpdatePedestalFloatPayload.ID,
-                (updatePedestalFloatPayload, context) ->
-                        context.server().execute(() -> {
-                                BlockEntity be = context.player()
-                                        .getWorld()
-                                        .getBlockEntity(updatePedestalFloatPayload.pos());
-                                if (be instanceof PedestalBlockEntity pedestal) {
-                                    pedestal.updateConfigField(updatePedestalFloatPayload.fieldName(), updatePedestalFloatPayload.value());
-                                }
-                            }
-                        ));
+                (server, player, handler, buf, responseSender) -> {
+                    UpdatePedestalFloatPayload payload = new UpdatePedestalFloatPayload(buf);
+                    server.execute(() -> {
+                        BlockEntity be = player.getWorld().getBlockEntity(payload.pos());
+                        if (be instanceof PedestalBlockEntity pedestal) {
+                            pedestal.updateConfigField(payload.fieldName(), payload.value());
+                        }
+                    });
+                }
+        );
 
         ServerPlayNetworking.registerGlobalReceiver(
                 UpdatePedestalVec3dPayload.ID,
-                (payload, context) -> {
-                    context.server().execute(() -> {
-                        BlockEntity be = context.player()
-                                .getWorld()
-                                .getBlockEntity(payload.pos());
+                (server, player, handler, buf, responseSender) -> {
+                    UpdatePedestalVec3dPayload payload = new UpdatePedestalVec3dPayload(buf);
+                    server.execute(() -> {
+                        BlockEntity be = player.getWorld().getBlockEntity(payload.pos());
 
                         if (be instanceof PedestalBlockEntity pedestal) {
-                            pedestal.updateConfigField(
-                                    payload.fieldName(),
-                                    payload.getVec3d()
-                            );
+                            pedestal.updateConfigField(payload.fieldName(), payload.getVec3d());
                         }
                     });
                 }
@@ -43,17 +34,13 @@ public class ModPayloads {
 
         ServerPlayNetworking.registerGlobalReceiver(
                 UpdatePedestalBooleanPayload.ID,
-                (payload, context) -> {
-                    context.server().execute(() -> {
-                        BlockEntity be = context.player()
-                                .getWorld()
-                                .getBlockEntity(payload.pos());
+                (server, player, handler, buf, responseSender) -> {
+                    UpdatePedestalBooleanPayload payload = new UpdatePedestalBooleanPayload(buf);
+                    server.execute(() -> {
+                        BlockEntity be = player.getWorld().getBlockEntity(payload.pos());
 
                         if (be instanceof PedestalBlockEntity pedestal) {
-                            pedestal.updateConfigField(
-                                    payload.fieldName(),
-                                    payload.value()
-                            );
+                            pedestal.updateConfigField(payload.fieldName(), payload.value());
                         }
                     });
                 }

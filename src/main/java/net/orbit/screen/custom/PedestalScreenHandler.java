@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
@@ -18,6 +19,11 @@ public class PedestalScreenHandler extends ScreenHandler {
     public PedestalScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos blockPos) {
         this(syncId, playerInventory, playerInventory.player.getWorld().getBlockEntity(blockPos));
     }
+
+    public PedestalScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
+        this(syncId, playerInventory, buf.readBlockPos());
+    }
+
     public PedestalScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity) {
         super(ModScreenHandlers.PEDESTAL_SCREEN_HANDLER, syncId);
         this.inventory = (Inventory) blockEntity;

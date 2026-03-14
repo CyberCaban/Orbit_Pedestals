@@ -5,6 +5,8 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextWidget;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -20,7 +22,7 @@ import java.util.function.Supplier;
 
 public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
     public static final Identifier GUI_TEXTURE =
-            Identifier.of(OrbitPedestals.MOD_ID, "textures/gui/pedestal/pedestal_gui.png");
+                        new Identifier(OrbitPedestals.MOD_ID, "textures/gui/pedestal/pedestal_gui.png");
 
     private Vec3d currentOffset;
     private Vec3d currentRotation;
@@ -199,21 +201,21 @@ public class PedestalScreen extends HandledScreen<PedestalScreenHandler> {
     }
 
     private void sendConfigUpdate(String fieldName, float value) {
-        ClientPlayNetworking.send(new UpdatePedestalFloatPayload(
-                handler.getBlockPos(), fieldName, value
-        ));
+                PacketByteBuf buf = PacketByteBufs.create();
+                new UpdatePedestalFloatPayload(handler.getBlockPos(), fieldName, value).write(buf);
+                ClientPlayNetworking.send(UpdatePedestalFloatPayload.ID, buf);
     }
 
     private void sendConfigUpdate(String fieldName, Vec3d value) {
-        ClientPlayNetworking.send(new UpdatePedestalVec3dPayload(
-                handler.getBlockPos(), fieldName, value
-        ));
+                PacketByteBuf buf = PacketByteBufs.create();
+                new UpdatePedestalVec3dPayload(handler.getBlockPos(), fieldName, value).write(buf);
+                ClientPlayNetworking.send(UpdatePedestalVec3dPayload.ID, buf);
     }
 
     private void sendConfigUpdate(String fieldName, boolean value) {
-        ClientPlayNetworking.send(new UpdatePedestalBooleanPayload(
-                handler.getBlockPos(), fieldName, value
-        ));
+                PacketByteBuf buf = PacketByteBufs.create();
+                new UpdatePedestalBooleanPayload(handler.getBlockPos(), fieldName, value).write(buf);
+                ClientPlayNetworking.send(UpdatePedestalBooleanPayload.ID, buf);
     }
 
     @Override

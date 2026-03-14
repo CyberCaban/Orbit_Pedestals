@@ -11,9 +11,9 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 import static net.orbit.block.entity.custom.PedestalRenderConfig.Builder.configToBuilder;
 
-public class PedestalBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, ExtendedScreenHandlerFactory<BlockPos> {
+public class PedestalBlockEntity extends BlockEntity implements ImplementedInventory, SidedInventory, ExtendedScreenHandlerFactory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(99, ItemStack.EMPTY);
     private PedestalRenderConfig renderConfig = PedestalRenderConfig.defaultSingleItem();
     private float rotation = 0;
@@ -67,10 +67,9 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     public ItemStack peek() {
-        for (ItemStack item : getItems().reversed()) {
-            if (!item.isEmpty()) {
-                return item;
-            }
+        for (int i = inventory.size() - 1; i >= 0; i--) {
+            ItemStack item = inventory.get(i);
+            if (!item.isEmpty()) return item;
         }
         return ItemStack.EMPTY;
     }
@@ -141,17 +140,19 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        Inventories.writeNbt(nbt, inventory, registryLookup);
+    protected void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        Inventories.writeNbt(nbt, inventory);
         writeRenderConfigToNbt(nbt);
         nbt.putFloat("rotation", rotation);
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        Inventories.readNbt(nbt, inventory, registryLookup);
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        // Important for incremental sync packets: clear stale stacks first.
+        inventory.clear();
+        Inventories.readNbt(nbt, inventory);
         this.renderConfig = readRenderConfigFromNbt(nbt);
         this.rotation = nbt.getFloat("rotation");
     }
@@ -224,8 +225,8 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        return createNbt(registries);
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 
     @Override
@@ -237,8 +238,8 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     }
 
     @Override
-    public BlockPos getScreenOpeningData(ServerPlayerEntity player) {
-        return this.pos;
+    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+        buf.writeBlockPos(this.pos);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.function.Function;
 public class ModItems {
     public static Item register(String name, Function<Item.Settings, Item> itemFactory, Item.Settings settings) {
         // Create the item key.
-        RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(OrbitPedestals.MOD_ID, name));
+        RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, new Identifier(OrbitPedestals.MOD_ID, name));
 
         // Create the item instance.
         Item item = itemFactory.apply(settings);

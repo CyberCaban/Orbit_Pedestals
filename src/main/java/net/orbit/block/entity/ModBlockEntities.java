@@ -11,7 +11,7 @@ import net.orbit.block.entity.custom.PedestalBlockEntity;
 
 public class ModBlockEntities {
     public static final BlockEntityType<PedestalBlockEntity> PEDESTAL_BE =
-            Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(OrbitPedestals.MOD_ID, "pedestal_be"),
+        Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(OrbitPedestals.MOD_ID, "pedestal_be"),
                     FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, ModBlocks.PEDESTAL_BLOCK).build());
 
     public static void registerBlockEntities() {

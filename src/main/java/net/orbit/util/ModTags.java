@@ -12,7 +12,7 @@ public class ModTags {
         public static final TagKey<Item> ORBIT_PEDESTALS_ITEMS = createTag("orbit_pedestals_items");
 
         private static TagKey<Item> createTag(String name) {
-            return TagKey.of(RegistryKeys.ITEM, Identifier.of(OrbitPedestals.MOD_ID, name));
+            return TagKey.of(RegistryKeys.ITEM, new Identifier(OrbitPedestals.MOD_ID, name));
         }
     }
 }

@@ -98,7 +98,7 @@ public class NumericInputWidget extends ClickableWidget {
     }
 
     @Override
-    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+    protected void renderButton(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         labelWidget.render(context, mouseX, mouseY, deltaTicks);
         textField.render(context, mouseX, mouseY, deltaTicks);
         decrementButton.render(context, mouseX, mouseY, deltaTicks);
